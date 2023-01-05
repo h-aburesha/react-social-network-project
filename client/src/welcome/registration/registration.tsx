@@ -1,27 +1,54 @@
-import { ChangeEvent, Component, FormEvent } from "react";
+import { Component, FormEvent } from "react";
 
 // interface Friend {
 //     firstname: string,
 //     lastname: string,
 // }
 
-export class Registration extends Component {
+interface RegistrationState {
+    firstname?: string;
+    lastname?: string;
+    email?: string;
+    password?: string;
+}
+
+// first any, props that come from the parent
+
+export class Registration extends Component<any, RegistrationState> {
     constructor(props) {
         super(props);
         this.state = {
             firstname: "",
             lastname: "",
             email: "",
+            password: "",
         };
     }
 
     handleSubmit = (evt: FormEvent) => {
         evt.preventDefault();
         console.log("evt: ", evt);
-        //    fetch("/") {}
+        fetch("/add-formdata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                password: this.state.password,
+            }),
+        })
+            .then((res) => {
+                return res.json();
+            })
+            .then((data) => {
+                // console.log("/registration data: ", data);
+            });
     };
 
-    handleInputChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    handleInputChange = (evt) => {
         evt.preventDefault();
         console.log("evt: ", evt.target.name);
         const property = evt.target.name;
@@ -33,17 +60,70 @@ export class Registration extends Component {
     // }
 
     render = () => {
+        console.log("state: ", this.state);
         return (
             <div>
-                <h1>Welcome</h1>
-
-                {/* {LogoComponent}*/}
-
+                <h1>Welcome to MY SOCIAL NETWORK</h1>
+                {/* <LogoComponent/> */}
+                <p>Lorum ipsum</p>
                 <form onSubmit={this.handleSubmit}>
-                    <label>Firstname: </label>
-                    <input name="firstname" type="text"></input>
+                    <div>
+                        <span>Firstname</span>
+                        <input
+                            type="text"
+                            name="firstname"
+                            onChange={this.handleInputChange}
+                        />
+                    </div>
+                    <div>
+                        <span>Lastname</span>
+                        <input
+                            type="text"
+                            name="lastname"
+                            onChange={this.handleInputChange}
+                        />
+                    </div>
+                    <div>
+                        <span>Email</span>
+                        <input
+                            type="email"
+                            name="email"
+                            onChange={this.handleInputChange}
+                        />
+                    </div>
+                    <div>
+                        <span>Password</span>
+                        <input
+                            type="password"
+                            name="password"
+                            onChange={this.handleInputChange}
+                        />
+                    </div>
+                    <button>Register</button>
                 </form>
+                {/* link to login page with <a> tag */}
             </div>
         );
     };
 }
+
+/*
+<div className="form-text-inputs-flex">
+
+    <form onSubmit={this.handleSubmit}>
+        <span>Firstname: </span>
+        <input type="text" name="firstname" onChange={this.handleInputChange} />
+        <span>Lastname: </span>
+        <input type="text" name="lastname" onChange={this.handleInputChange} />
+        <span>Email: </span>
+        <input type="email" name="email" onChange={this.handleInputChange} />
+        <span>Password: </span>
+        <input
+            type="password"
+            name="password"
+            onChange={this.handleInputChange}
+        />
+        <button>Submit</button>
+    </form>
+</div>;
+*/
