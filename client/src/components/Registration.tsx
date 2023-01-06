@@ -1,4 +1,5 @@
 import { Component, FormEvent } from "react";
+import { Logo } from "./Logocomponent";
 
 // interface Friend {
 //     firstname: string,
@@ -62,12 +63,12 @@ export class Registration extends Component<any, RegistrationState> {
     render = () => {
         console.log("state: ", this.state);
         return (
-            <div>
-                <h1>Welcome to MY SOCIAL NETWORK</h1>
-                {/* <LogoComponent/> */}
-                <p>Lorum ipsum</p>
+            <div className="registeration-container">
+                <Logo />
+                <h1>Welcome JAM</h1>
+                <p>Cherry picking ... </p>
                 <form onSubmit={this.handleSubmit}>
-                    <div>
+                    <div className="form-input-span">
                         <span>Firstname</span>
                         <input
                             type="text"
@@ -75,7 +76,7 @@ export class Registration extends Component<any, RegistrationState> {
                             onChange={this.handleInputChange}
                         />
                     </div>
-                    <div>
+                    <div className="form-input-span">
                         <span>Lastname</span>
                         <input
                             type="text"
@@ -83,7 +84,7 @@ export class Registration extends Component<any, RegistrationState> {
                             onChange={this.handleInputChange}
                         />
                     </div>
-                    <div>
+                    <div className="form-input-span">
                         <span>Email</span>
                         <input
                             type="email"
@@ -91,7 +92,7 @@ export class Registration extends Component<any, RegistrationState> {
                             onChange={this.handleInputChange}
                         />
                     </div>
-                    <div>
+                    <div className="form-input-span">
                         <span>Password</span>
                         <input
                             type="password"
@@ -99,7 +100,9 @@ export class Registration extends Component<any, RegistrationState> {
                             onChange={this.handleInputChange}
                         />
                     </div>
-                    <button>Register</button>
+                    <div className="form-input-span">
+                        <button>Register</button>
+                    </div>
                 </form>
                 {/* link to login page with <a> tag */}
             </div>

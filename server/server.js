@@ -6,6 +6,7 @@ const { PORT = 3001 } = process.env;
 const { fileUpload, uploader } = require("./file-upload");
 const cookieSession = require("cookie-session");
 const { addNewUser } = require("./db");
+const { sendEmail } = require("./ses");
 
 app.use(compression());
 app.use(express.json());

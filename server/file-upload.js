@@ -3,7 +3,6 @@ const path = require("path");
 const uidSafe = require("uid-safe");
 const aws = require("aws-sdk");
 const fs = require("fs");
-
 const { AWS_KEY, AWS_SECRET, AWS_BUCKET } = process.env;
 
 const diskStorage = multer.diskStorage({

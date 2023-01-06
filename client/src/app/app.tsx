@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Logo } from "../components/Logocomponent";
 
 export class App extends Component {
     constructor(props) {
@@ -8,6 +9,10 @@ export class App extends Component {
     }
 
     render() {
-        return <div>{/* <LogoComponent /> */}</div>;
+        return (
+            <div>
+                <Logo />
+            </div>
+        );
     }
 }

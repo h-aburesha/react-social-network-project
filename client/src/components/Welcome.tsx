@@ -1,4 +1,4 @@
-import { Registration } from "./registration/registration";
+import { Registration } from "./Registration";
 
 export function Welcome() {
     return (
