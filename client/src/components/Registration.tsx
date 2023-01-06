@@ -65,8 +65,8 @@ export class Registration extends Component<any, RegistrationState> {
         return (
             <div className="registeration-container">
                 <Logo />
-                <h1>Welcome JAM</h1>
-                <p>Cherry picking ... </p>
+                <h1> Hi at Jam!</h1>
+                <p>Cherry pick new friends .. </p>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-input-span">
                         <span>Firstname</span>

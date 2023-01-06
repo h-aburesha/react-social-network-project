@@ -9,8 +9,8 @@ const ses = new aws.SES({
     region: AWS_REGION,
 });
 
-const sendEmail = ses
-    .sendEmail({
+const sendEmail = () => {
+    ses.sendEmail({
         Source: "Funky Chicken <funky.chicken@spiced.academy>",
         Destination: {
             ToAddresses: ["disco.duck@spiced.academy"],
@@ -26,8 +26,9 @@ const sendEmail = ses
             },
         },
     })
-    .promise()
-    .then(() => console.log("it worked!"))
-    .catch((err) => console.log(err));
+        .promise()
+        .then(() => console.log("it worked!"))
+        .catch((err) => console.log(err));
+};
 
 module.exports = { sendEmail };

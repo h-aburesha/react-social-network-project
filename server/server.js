@@ -3,10 +3,11 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const { PORT = 3001 } = process.env;
-const { fileUpload, uploader } = require("./file-upload");
+// const { fileUpload, uploader } = require("./file-upload");
 const cookieSession = require("cookie-session");
 const { addNewUser } = require("./db");
 const { sendEmail } = require("./ses");
+const encrypt = require("./encrypt");
 
 app.use(compression());
 app.use(express.json());
@@ -25,29 +26,21 @@ app.get("/user/id.json", (req, res) => {
 app.post("/add-formdata", (req, res) => {
     const { firstname, lastname, email, password } = req.body;
     console.log("req.body", req.body);
-
-    // encrypt
-    //     .hash(password)
-    //     .then((hashedPWD) => {
-    //         return addNewUser(
-    //             firstname,
-    //             lastname,
-    //             email,
-    //             hashedPWD,
-    //             fileUrl,
-    //             bio
-    //         );
-    //     })
-    //     .then(({ rows }) => {
-    //         req.session.user_id = rows[0].id;
-    //         res.json({
-    //             success: true,
-    //             user: rows[0],
-    //         });
-    //     })
-    //     .catch((err) => {
-    //         console.log("error in addNewUser", err);
-    //     });
+    encrypt.hash(password).then((hashedPWD) => {
+        console.log(hashedPWD);
+        addNewUser(firstname, lastname, email, hashedPWD)
+            .then(({ rows }) => {
+                console.log(rows[0]);
+                // req.session.user_id = rows[0].id;
+                // res.json({
+                //     success: true,
+                //     user: rows[0],
+                // });
+            })
+            .catch((err) => {
+                console.log("error in addNewUser", err);
+            });
+    });
 });
 
 app.get("*", function (req, res) {

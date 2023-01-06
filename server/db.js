@@ -7,17 +7,10 @@ const db = spicedPg(
         `postgres:${SQL_USER}:${SQL_PASSWORD}@localhost:5432/socialnetwork`
 );
 
-module.exports.addNewUser = (
-    firstname,
-    lastname,
-    email,
-    password,
-    avatar_url,
-    bio
-) => {
+module.exports.addNewUser = (firstname, lastname, email, hashedPWD) => {
     return db.query(
-        `INSERT INTO users (firstname, lastname, email, password, avatar_url, bio) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`,
-        [firstname, lastname, email, password, avatar_url, bio]
+        `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING *;`,
+        [firstname, lastname, email, hashedPWD]
     );
 };
 
