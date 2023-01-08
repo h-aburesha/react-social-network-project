@@ -14,6 +14,13 @@ module.exports.addNewUser = (firstname, lastname, email, hashedPWD) => {
     );
 };
 
+module.exports.comparePasswordByEmail = (email) => {
+    return db.query(
+        `SELECT email, password, users.id FROM users WHERE email = $1 `,
+        [email]
+    );
+};
+
 // module.exports.getImgById = (id) => {
 //     return db.query(`SELECT * FROM images WHERE id = $1`, [id]);
 // };

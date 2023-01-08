@@ -1,5 +1,6 @@
 import { Component, FormEvent } from "react";
 import { Logo } from "./Logocomponent";
+import { Link } from "react-router-dom";
 
 // interface Friend {
 //     firstname: string,
@@ -29,7 +30,7 @@ export class Registration extends Component<any, RegistrationState> {
     handleSubmit = (evt: FormEvent) => {
         evt.preventDefault();
         console.log("evt: ", evt);
-        fetch("/add-formdata", {
+        fetch("/register", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -64,9 +65,6 @@ export class Registration extends Component<any, RegistrationState> {
         console.log("state: ", this.state);
         return (
             <div className="registeration-container">
-                <Logo />
-                <h1> Hi at Jam!</h1>
-                <p>Cherry pick new friends .. </p>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-input-span">
                         <span>Firstname</span>
@@ -104,13 +102,17 @@ export class Registration extends Component<any, RegistrationState> {
                         <button>Register</button>
                     </div>
                 </form>
-                {/* link to login page with <a> tag */}
+                <Link to="/login"> Already a member? </Link>
             </div>
         );
     };
 }
 
 /*
+
+
+<Link to="/login"> Already a member? </Link>
+
 <div className="form-text-inputs-flex">
 
     <form onSubmit={this.handleSubmit}>

@@ -35,17 +35,37 @@ main {
 .logo img {
     height: 100px;
     width: 100px;
+    transition: transform 0.5s ease-in-out;
 }
+
+.logo img:hover {
+    transform: scale(1.1);
+}
+
+.error-message {
+    color: red;
+    font-weight: bolder;
+    padding: 8px;
+}
+
 .logo {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 100px;
+    padding: 8px;
+}
+
+form .login {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 form input {

@@ -12,6 +12,8 @@ export class Logo extends Component {
         return (
             <div className="logo">
                 <img src="/logo.png" />
+                <h1> Say Jam!</h1>
+                <p>Cherry pick new friends .. </p>
             </div>
         );
     };
