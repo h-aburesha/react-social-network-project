@@ -17,7 +17,7 @@ export function Welcome() {
                         <Route path="/login" element={<LoginForm />} />
 
                         <Route
-                            path="/reset-password"
+                            path="/password/reset/start"
                             element={<ResetPassword />}
                         />
                         <Route path="/" element={<Registration />} />

@@ -12,6 +12,7 @@ const {
     verifySecretCode,
     updatePassword,
 } = require("./db");
+
 const { sendEmail } = require("./ses");
 const encrypt = require("./encrypt");
 const cryptoRandomString = require("crypto-random-string");
@@ -49,6 +50,9 @@ app.post("/register", async (req, res) => {
             user: rows[0],
         });
     } catch (err) {
+        res.json({
+            success: false,
+        });
         console.log("error in addNewUser", err);
     }
 });
@@ -119,8 +123,8 @@ app.post("/password/reset/verify", (req, res) => {
                     res.json({ success: true });
                 });
         } else {
+            console.log("Code expired?");
             res.json({ success: false });
-            return;
         }
     });
 });

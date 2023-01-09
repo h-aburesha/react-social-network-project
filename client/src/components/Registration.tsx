@@ -1,6 +1,6 @@
 import { Component, FormEvent } from "react";
 import { Logo } from "./Logocomponent";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 // interface Friend {
 //     firstname: string,
@@ -12,6 +12,7 @@ interface RegistrationState {
     lastname?: string;
     email?: string;
     password?: string;
+    error?: string;
 }
 
 // first any, props that come from the parent
@@ -24,6 +25,7 @@ export class Registration extends Component<any, RegistrationState> {
             lastname: "",
             email: "",
             password: "",
+            error: "",
         };
     }
 
@@ -42,11 +44,16 @@ export class Registration extends Component<any, RegistrationState> {
                 password: this.state.password,
             }),
         })
-            .then((res) => {
-                return res.json();
-            })
+            .then((res) => res.json())
             .then((data) => {
-                // console.log("/registration data: ", data);
+                console.log("/registration data: ", data);
+                if (data.success) {
+                    return redirect("/login");
+                } else {
+                    this.setState({
+                        error: "Email already exists!!",
+                    });
+                }
             });
     };
 
@@ -66,6 +73,7 @@ export class Registration extends Component<any, RegistrationState> {
         return (
             <div className="registeration-container">
                 <form onSubmit={this.handleSubmit}>
+                    <div className="error-message">{this.state.error}</div>
                     <div className="form-input-span">
                         <span>Firstname</span>
                         <input

@@ -69,7 +69,7 @@ export class LoginForm extends Component<any, LoginState> {
                 </label>
                 <br />
                 <button type="submit">Log in</button>
-                <Link to="/reset-password"> Reset password? </Link>
+                <Link to="/password/reset/start"> Reset password? </Link>
             </form>
         );
     }
