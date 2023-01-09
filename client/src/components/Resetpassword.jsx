@@ -69,7 +69,7 @@ export default class Login extends Component {
                             });
                         } else {
                             this.setState({
-                                error: "Something went wrong !",
+                                error: "Code Expired, try again!",
                             });
                         }
                     });

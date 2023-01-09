@@ -35,6 +35,13 @@ module.exports.verifySecretCode = (email) => {
     );
 };
 
+module.exports.updatePassword = (email, hashedPWD) => {
+    return db.query(
+        `UPDATE users SET password = $2 WHERE email = $1 RETURNING *;`,
+        [email, hashedPWD]
+    );
+};
+
 //SELECT * FROM reset_codes WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';
 
 // module.exports.getImgById = (id) => {

@@ -10,6 +10,7 @@ const {
     getUserByEmail,
     addSecretCode,
     verifySecretCode,
+    updatePassword,
 } = require("./db");
 const { sendEmail } = require("./ses");
 const encrypt = require("./encrypt");
@@ -108,28 +109,20 @@ app.post("/password/reset/verify", (req, res) => {
     verifySecretCode(email).then(({ rows }) => {
         if (rows[0].code === code && rows[0].email === email) {
             console.log("WOHOOOO MATCH! ");
-            res.json({ success: true });
+            encrypt
+                .hash(password)
+                .then((hashedPWD) => {
+                    return updatePassword(email, hashedPWD);
+                })
+                .then(({ rows }) => {
+                    console.log("Password Updated in DB", rows);
+                    res.json({ success: true });
+                });
         } else {
             res.json({ success: false });
+            return;
         }
     });
-
-    // getUserByEmail(email).then(({ rows }) => {
-    //     // console.log("data from /reset: ", data)
-    //     if (rows[0]) {
-    //         // Save a new code and the matching email to the database
-    //         addSecretCode(email, secretCode).then(() =>
-    //             // Send the email - await sendEmail(email)
-    //             console.log(email, secretCode)
-    //         );
-
-    //         res.json({ success: true });
-    //         // console.log(secretCode);
-    //     } else {
-    //         res.json({ success: false });
-    //         return;
-    //     }
-    // });
 });
 
 app.get("*", function (req, res) {
