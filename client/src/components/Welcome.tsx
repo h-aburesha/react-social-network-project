@@ -15,6 +15,7 @@ export function Welcome() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/login" element={<LoginForm />} />
+
                         <Route
                             path="/reset-password"
                             element={<ResetPassword />}

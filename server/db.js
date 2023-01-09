@@ -14,12 +14,28 @@ module.exports.addNewUser = (firstname, lastname, email, hashedPWD) => {
     );
 };
 
-module.exports.comparePasswordByEmail = (email) => {
+module.exports.addSecretCode = (email, secretCode) => {
+    return db.query(
+        `INSERT INTO reset_codes (email, code) VALUES ($1, $2) RETURNING *;`,
+        [email, secretCode]
+    );
+};
+
+module.exports.getUserByEmail = (email) => {
     return db.query(
         `SELECT email, password, users.id FROM users WHERE email = $1 `,
         [email]
     );
 };
+
+module.exports.verifySecretCode = (email) => {
+    return db.query(
+        `SELECT email, code FROM reset_codes WHERE email = $1 AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes' ORDER BY created_at DESC LIMIT 1;;`,
+        [email]
+    );
+};
+
+//SELECT * FROM reset_codes WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';
 
 // module.exports.getImgById = (id) => {
 //     return db.query(`SELECT * FROM images WHERE id = $1`, [id]);

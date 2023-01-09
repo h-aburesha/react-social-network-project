@@ -5,9 +5,15 @@ const path = require("path");
 const { PORT = 3001 } = process.env;
 // const { fileUpload, uploader } = require("./file-upload");
 const cookieSession = require("cookie-session");
-const { addNewUser, comparePasswordByEmail } = require("./db");
+const {
+    addNewUser,
+    getUserByEmail,
+    addSecretCode,
+    verifySecretCode,
+} = require("./db");
 const { sendEmail } = require("./ses");
 const encrypt = require("./encrypt");
+const cryptoRandomString = require("crypto-random-string");
 
 app.use(compression());
 app.use(express.json());
@@ -23,54 +29,107 @@ app.get("/user/id.json", (req, res) => {
     res.json({ userId: req.session.userId }); // instead of null. use value from req.session
 });
 
-app.post("/register", (req, res) => {
-    const { firstname, lastname, email, password } = req.body;
-    console.log("req.body", req.body);
-    encrypt.hash(password).then((hashedPWD) => {
-        console.log(hashedPWD);
-        addNewUser(firstname, lastname, email, hashedPWD)
-            .then(({ rows }) => {
-                console.log(rows[0]);
-                req.session.userId = rows[0].id;
-                // res.json({
-                //     success: true,
-                //     user: rows[0],
-                // });
-            })
-            .catch((err) => {
-                console.log("error in addNewUser", err);
-            });
-    });
+app.post("/register", async (req, res) => {
+    try {
+        const { firstname, lastname, email, password } = req.body;
+        // console.log("req.body", req.body);
+        const hashedPWD = await encrypt.hash(password);
+        // console.log(hashedPWD);
+        const { rows } = await addNewUser(
+            firstname,
+            lastname,
+            email,
+            hashedPWD
+        );
+        console.log(rows[0]);
+        req.session.userId = rows[0].id;
+        res.json({
+            success: true,
+            user: rows[0],
+        });
+    } catch (err) {
+        console.log("error in addNewUser", err);
+    }
 });
 
-app.post("/login", (req, res) => {
-    const { email, password } = req.body;
-    console.log("req.body", req.body);
-    comparePasswordByEmail(email).then(({ rows }) => {
-        console.log("db-email-rows: ", rows);
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        // console.log("req.body", req.body);
+        const { rows } = await getUserByEmail(email);
+        // console.log("db-email-rows: ", rows);
         if (rows[0]) {
             req.session.userId = rows[0].id;
-            console.log("req.session.userId:", req.session.userId);
-            encrypt
-                .compare(password, rows[0].password)
-                .then((passedTest) => {
-                    console.log("passedTest? :", passedTest);
-                    if (passedTest) {
-                        res.json({
-                            success: true,
-                        });
-                        // res.redirect("/");
-                    } else {
-                        res.json({
-                            success: false,
-                        });
-                    }
-                })
-                .catch((err) => {
-                    console.log("err app.post /login: ", err);
+            // console.log("req.session.userId:", req.session.userId);
+            const passedTest = await encrypt.compare(
+                password,
+                rows[0].password
+            );
+            console.log("passedTest? :", passedTest);
+            if (passedTest) {
+                res.json({
+                    success: true,
                 });
+                // res.redirect("/");
+            } else {
+                res.json({
+                    success: false,
+                });
+            }
+        }
+    } catch (err) {
+        console.log("err app.post /login: ", err);
+    }
+});
+app.post("/password/reset/start", async (req, res) => {
+    const { email } = req.body;
+    console.log("req.body", req.body);
+    try {
+        const { rows } = await getUserByEmail(email);
+        if (rows[0]) {
+            // Save a new code and the matching email to the database
+            const secretCode = cryptoRandomString({ length: 6 });
+            await addSecretCode(email, secretCode);
+            console.log(email, secretCode);
+            res.json({ success: true });
+        } else {
+            res.json({ success: false });
+            return;
+        }
+    } catch (error) {
+        console.error(error);
+        res.json({ success: false });
+    }
+});
+
+app.post("/password/reset/verify", (req, res) => {
+    const { code, password, email } = req.body;
+    console.log("req.body", req.body);
+    verifySecretCode(email).then(({ rows }) => {
+        if (rows[0].code === code && rows[0].email === email) {
+            console.log("WOHOOOO MATCH! ");
+            res.json({ success: true });
+        } else {
+            res.json({ success: false });
         }
     });
+
+    // getUserByEmail(email).then(({ rows }) => {
+    //     // console.log("data from /reset: ", data)
+    //     if (rows[0]) {
+    //         // Save a new code and the matching email to the database
+    //         addSecretCode(email, secretCode).then(() =>
+    //             // Send the email - await sendEmail(email)
+    //             console.log(email, secretCode)
+    //         );
+
+    //         res.json({ success: true });
+    //         // console.log(secretCode);
+    //     } else {
+    //         res.json({ success: false });
+    //         return;
+    //     }
+    // });
 });
 
 app.get("*", function (req, res) {

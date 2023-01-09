@@ -9,25 +9,25 @@ const ses = new aws.SES({
     region: AWS_REGION,
 });
 
-const sendEmail = () => {
+const sendEmail = (email) => {
     ses.sendEmail({
         Source: " Berry from Jam <sweltering.sweatshirt@spicedling.email> ",
         Destination: {
-            ToAddresses: ["hassan.aburesha@gmail.com"],
+            ToAddresses: [email],
         },
         Message: {
             Body: {
                 Text: {
-                    Data: "We can't wait to start working with you! Please arrive on Monday at 9:00 am. Dress code is casual so don't suit up.",
+                    Data: "Please click the following link to reset your password: ",
                 },
             },
             Subject: {
-                Data: "Your Application Has Been Accepted!",
+                Data: "Password Reset Instructions",
             },
         },
     })
         .promise()
-        .then(() => console.log("it worked!"))
+        .then(() => console.log("Email sent!!"))
         .catch((err) => console.log(err));
 };
 
