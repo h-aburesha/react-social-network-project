@@ -148,7 +148,12 @@ export default class Login extends Component {
                     </>
                 );
             case 3:
-                return <h1>Step 3</h1>;
+                return (
+                    <div className="registeration-container">
+                        <p> It worked! 🍒 </p>
+                        <Link to="/login"> Login muffin! </Link>
+                    </div>
+                );
 
             default:
                 break;
