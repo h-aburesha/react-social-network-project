@@ -48,6 +48,7 @@ export class Registration extends Component<any, RegistrationState> {
             .then((data) => {
                 console.log("/registration data: ", data);
                 if (data.success) {
+                    console.log("registration success");
                     return redirect("/login");
                 } else {
                     this.setState({

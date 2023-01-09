@@ -1,5 +1,5 @@
 import { Component, FormEvent, ChangeEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 
 interface LoginState {
     email?: string;
@@ -42,6 +42,9 @@ export class LoginForm extends Component<any, LoginState> {
             .then((data) => {
                 if (!data.success) {
                     this.setState({ error: "Wrong email or password" });
+                } else {
+                    console.log("login success"); /// ok till here but not redirecting??????
+                    return redirect("/");
                 } // how to route here with routes?
             });
     };
