@@ -15,6 +15,7 @@ export class App extends Component {
         return (
             <>
                 <Logo user={this.state.username} />
+
                 <h4> -- Logged in experience -- </h4>
             </>
         );

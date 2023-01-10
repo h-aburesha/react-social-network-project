@@ -150,7 +150,7 @@ export default class Login extends Component {
             case 3:
                 return (
                     <div className="registeration-container">
-                        <p> It worked! 🍒 </p>
+                        <h4> It worked! 🍒 </h4>
                         <Link to="/login"> Login muffin! </Link>
                     </div>
                 );

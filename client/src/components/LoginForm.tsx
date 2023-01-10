@@ -1,10 +1,12 @@
 import { Component, FormEvent, ChangeEvent } from "react";
 import { Link, redirect } from "react-router-dom";
+import { Navigate } from "react-router";
 
 interface LoginState {
     email?: string;
     password?: string;
     error?: string;
+    userLoggedIn?: boolean;
 }
 
 export class LoginForm extends Component<any, LoginState> {
@@ -14,6 +16,7 @@ export class LoginForm extends Component<any, LoginState> {
             email: "",
             password: "",
             error: "",
+            userLoggedIn: false,
         };
     }
 
@@ -43,13 +46,19 @@ export class LoginForm extends Component<any, LoginState> {
                 if (!data.success) {
                     this.setState({ error: "Wrong email or password" });
                 } else {
-                    console.log("login success"); /// ok till here but not redirecting??????
-                    return redirect("/");
-                } // how to route here with routes?
+                    console.log("login success");
+                    // this.setState({ userLoggedIn: true });
+                    // not neeeded because page HAS to be reloaded after cookie is set as LoggedIn
+                    // only location.replace("/") should be used to redirect to root
+                    location.replace("/");
+                }
             });
     };
 
     render() {
+        // if (this.state.userLoggedIn) {
+        //     return <Navigate to={"/"} />;
+        // }
         return (
             <form className="login" onSubmit={this.handleSubmit}>
                 <div className="error-message">{this.state.error}</div>

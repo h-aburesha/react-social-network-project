@@ -30,7 +30,7 @@ module.exports.getUserByEmail = (email) => {
 
 module.exports.verifySecretCode = (email) => {
     return db.query(
-        `SELECT email, code FROM reset_codes WHERE email = $1 AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes' ORDER BY created_at DESC LIMIT 1;;`,
+        `SELECT email, code FROM reset_codes WHERE email = $1 AND CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes' ORDER BY created_at DESC LIMIT 1;`,
         [email]
     );
 };
