@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Logo } from "../components/Logocomponent";
+import { ProfilePic } from "../components/ProfilePic";
 
 export class App extends Component {
     constructor(props) {
@@ -15,8 +16,11 @@ export class App extends Component {
         return (
             <>
                 <Logo user={this.state.username} />
+                <ProfilePic src={this.src} name="test.prop.works!!" />
 
-                <h4> -- Logged in experience -- </h4>
+                <h4 style={{ textAlign: "center" }}>
+                    -- Logged in experience --
+                </h4>
             </>
         );
     }
