@@ -53,7 +53,7 @@ app.post("/register", async (req, res) => {
         res.json({
             success: false,
         });
-        console.log("error in addNewUser", err);
+        console.log("err post(/register): ", err);
     }
 });
 
@@ -83,7 +83,7 @@ app.post("/login", async (req, res) => {
             }
         }
     } catch (err) {
-        console.log("err app.post /login: ", err);
+        console.log("err post(/login): ", err);
     }
 });
 app.post("/password/reset/start", async (req, res) => {
@@ -102,32 +102,36 @@ app.post("/password/reset/start", async (req, res) => {
             return;
         }
     } catch (error) {
-        console.error(error);
+        console.error("err post(/password/reset/start): ", error);
         res.json({ success: false });
     }
 });
 
-app.post("/password/reset/verify", (req, res) => {
-    const { code, password, email } = req.body;
-    console.log("req.body", req.body);
-    verifySecretCode(email).then(({ rows }) => {
-        if (rows[0].code === code && rows[0].email === email) {
-            console.log("WOHOOOO MATCH! ");
-            encrypt
-                .hash(password)
-                .then((hashedPWD) => {
-                    return updatePassword(email, hashedPWD);
-                })
-                .then(({ rows }) => {
-                    console.log("Password Updated in DB", rows);
-                    res.json({ success: true });
-                });
-        } else {
-            console.log("Code expired?");
-            res.json({ success: false });
-        }
-    });
-});
+// app.post("/password/reset/verify", (req, res) => {
+//     const { code, password, email } = req.body;
+//     console.log("req.body", req.body);
+//     verifySecretCode(email)
+//         .then(({ rows }) => {
+//             if (rows[0].code === code && rows[0].email === email) {
+//                 console.log("WOHOOOO MATCH! ");
+//                 encrypt
+//                     .hash(password)
+//                     .then((hashedPWD) => {
+//                         return updatePassword(email, hashedPWD);
+//                     })
+//                     .then(({ rows }) => {
+//                         console.log("Password Updated in DB", rows);
+//                         res.json({ success: true });
+//                     });
+//             } else {
+//                 console.log("Code probably expired?");
+//                 res.json({ success: false });
+//             }
+//         })
+//         .catch((error) =>
+//             console.log("err post(/password/reset/verify):", error)
+//         );
+// });
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
