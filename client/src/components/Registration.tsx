@@ -1,6 +1,7 @@
 import { Component, FormEvent } from "react";
 import { Logo } from "./Logocomponent";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Navigate } from "react-router";
 
 // interface Friend {
 //     firstname: string,
@@ -13,6 +14,7 @@ interface RegistrationState {
     email?: string;
     password?: string;
     error?: string;
+    userRegistered?: boolean;
 }
 
 // first any, props that come from the parent
@@ -26,6 +28,7 @@ export class Registration extends Component<any, RegistrationState> {
             email: "",
             password: "",
             error: "",
+            userRegistered: false,
         };
     }
 
@@ -48,8 +51,9 @@ export class Registration extends Component<any, RegistrationState> {
             .then((data) => {
                 console.log("/registration data: ", data);
                 if (data.success) {
-                    console.log("registration success");
-                    return redirect("/login");
+                    // console.log("registration success");
+                    this.setState({ userRegistered: true });
+                    console.log("userRegistered? :", this.state.userRegistered);
                 } else {
                     this.setState({
                         error: "Email already exists!!",
@@ -70,7 +74,10 @@ export class Registration extends Component<any, RegistrationState> {
     // }
 
     render = () => {
-        console.log("state: ", this.state);
+        // console.log("state: ", this.state);
+        if (this.state.userRegistered) {
+            return <Navigate to={"/login"} />;
+        }
         return (
             <div className="registeration-container">
                 <form onSubmit={this.handleSubmit}>
@@ -116,28 +123,3 @@ export class Registration extends Component<any, RegistrationState> {
         );
     };
 }
-
-/*
-
-
-<Link to="/login"> Already a member? </Link>
-
-<div className="form-text-inputs-flex">
-
-    <form onSubmit={this.handleSubmit}>
-        <span>Firstname: </span>
-        <input type="text" name="firstname" onChange={this.handleInputChange} />
-        <span>Lastname: </span>
-        <input type="text" name="lastname" onChange={this.handleInputChange} />
-        <span>Email: </span>
-        <input type="email" name="email" onChange={this.handleInputChange} />
-        <span>Password: </span>
-        <input
-            type="password"
-            name="password"
-            onChange={this.handleInputChange}
-        />
-        <button>Submit</button>
-    </form>
-</div>;
-*/
