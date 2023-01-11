@@ -9,7 +9,7 @@ export const App = () => {
     return (
         <>
             <Logo user={username} />
-            <ProfilePic src={this.src} name="test.prop.works!!" />
+            <ProfilePic />
 
             <h4 style={{ textAlign: "center" }}>-- Logged in experience --</h4>
         </>
