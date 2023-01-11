@@ -11,6 +11,7 @@ const {
     addSecretCode,
     verifySecretCode,
     updatePassword,
+    getUserDataById,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -29,6 +30,25 @@ app.use(
 
 app.get("/user/id.json", (req, res) => {
     res.json({ userId: req.session.userId }); // instead of null. use value from req.session
+});
+
+app.get("/user", async (req, res) => {
+    try {
+        const { userId } = req.session;
+        const { rows } = await getUserDataById(userId);
+        // console.log("getUserDataById rows[0]: ", rows[0]);
+        res.json({
+            success: true,
+            user: rows[0],
+        });
+    } catch (error) {
+        console.log("err get('/user'): ", error);
+        res.json({
+            success: false,
+        });
+    }
+
+    // res.json({ userId: req.session.userId }); // instead of null. use value from req.session
 });
 
 app.post("/register", async (req, res) => {

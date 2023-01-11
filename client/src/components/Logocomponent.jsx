@@ -13,6 +13,7 @@ export class Logo extends Component {
             <div className="logo">
                 <img src="/logo.png" />
                 <h1> Say Jam!</h1>
+                <h5>Test prop {this.props.firstname}</h5>
                 <p>Cherry pick new friends .. </p>
             </div>
         );

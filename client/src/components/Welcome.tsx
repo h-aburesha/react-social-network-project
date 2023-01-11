@@ -4,8 +4,6 @@ import { Registration } from "./Registration";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ResetPassword from "./Resetpassword";
 
-//// exact give error?
-
 export function Welcome() {
     return (
         <div>

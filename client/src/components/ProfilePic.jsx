@@ -1,6 +1,6 @@
 export function ProfilePic(props) {
     return (
-        <div class="card">
+        <div className="card">
             <img
                 src="..//Red-berry-jam-isolated-on-transparent-background-PNG.png"
                 alt="Image"
