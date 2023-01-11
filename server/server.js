@@ -3,7 +3,7 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const { PORT = 3001 } = process.env;
-// const { fileUpload, uploader } = require("./file-upload");
+const { fileUpload, uploader } = require("./file-upload");
 const cookieSession = require("cookie-session");
 const {
     addNewUser,
@@ -39,7 +39,7 @@ app.get("/user", async (req, res) => {
         // console.log("getUserDataById rows[0]: ", rows[0]);
         res.json({
             success: true,
-            user: rows[0],
+            user: rows[0], // All data fetched for logged in user (name, profile, status, etc.)
         });
     } catch (error) {
         console.log("err get('/user'): ", error);

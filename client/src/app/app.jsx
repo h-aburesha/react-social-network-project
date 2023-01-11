@@ -17,7 +17,8 @@ export const App = () => {
     return (
         <>
             <Logo firstname={user.firstname} />
-            <h1>{user.email}</h1>
+            <ProfilePic url={user.profilepicurl} />
+            <h5>{user.email}</h5>
             <ProfilePic />
         </>
     );

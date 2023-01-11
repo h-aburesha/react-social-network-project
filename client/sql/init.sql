@@ -16,6 +16,10 @@ CREATE TABLE reset_codes(
 );
 
 
+ALTER TABLE users
+ADD COLUMN profilepic character varying(255) DEFAULT null,
+ADD COLUMN loggedin boolean DEFAULT false;
+
 -- CREATE TABLE images(
 --     id SERIAL PRIMARY KEY,
 --     image_url VARCHAR NOT NULL,
