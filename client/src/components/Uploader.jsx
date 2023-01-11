@@ -16,7 +16,7 @@ export const UploadProfilePicture = ({ userId }) => {
 
         const formData = new FormData();
 
-        console.log(("event.target.files[0]: ", event.target.files));
+        // console.log(("event.target.files[0]: ", event.target.files));
 
         formData.append("file", fileInput.current.files[0]);
 

@@ -28,8 +28,10 @@ const s3 = new aws.S3({
 
 function fileUpload(req, res, next) {
     console.log("file: ", req.file);
+    // console.log( "process.env.AWS_BUCKET");
+    // console.log("AWS Crap: ", AWS_KEY, AWS_SECRET, AWS_BUCKET);
     if (!req.file) {
-        console.log("[imageboard:s3] file not there");
+        console.log("[socialnetwork:s3] file not there");
         res.statusCode = 400;
         res.send();
     } else {
@@ -51,7 +53,7 @@ function fileUpload(req, res, next) {
                 next();
             })
             .catch((err) => {
-                console.log("[imageboard:s3] error uploading to s3", err);
+                console.log("[socialnetwork:s3] error uploading to s3", err);
                 res.sendStatus(500);
             });
     }
