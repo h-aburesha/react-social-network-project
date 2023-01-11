@@ -11,6 +11,13 @@ module.exports.getUserDataById = (userId) => {
     return db.query(`SELECT * FROM users WHERE users.id = $1 `, [userId]);
 };
 
+module.exports.uploadPictureById = (userId, url) => {
+    return db.query(
+        `UPDATE users SET profilepicurl = $2 WHERE users.id = $1 RETURNING *;`,
+        [userId, url]
+    );
+};
+
 module.exports.addNewUser = (firstname, lastname, email, hashedPWD) => {
     return db.query(
         `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING *;`,

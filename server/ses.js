@@ -31,4 +31,4 @@ const sendEmail = (email) => {
         .catch((err) => console.log(err));
 };
 
-module.exports = { sendEmail };
+// module.exports = { sendEmail };

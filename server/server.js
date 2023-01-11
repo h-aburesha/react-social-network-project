@@ -12,6 +12,7 @@ const {
     verifySecretCode,
     updatePassword,
     getUserDataById,
+    uploadPictureById,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -152,6 +153,34 @@ app.post("/password/reset/verify", (req, res) => {
             console.log("err post(/password/reset/verify):", error)
         );
 });
+
+app.post(
+    "/upload-profile-pic",
+    uploader.single("file"),
+    fileUpload,
+    (req, res) => {
+        const { userId } = req.body;
+        console.log("userId: ", req.body);
+        // const { fileUrl } = res.locals;
+        // if (!req.file) {
+        //     res.json({
+        //         success: false,
+        //     });
+        //     return;
+        // }
+
+        // // console.log(username, title, description, "req.body", fileUrl);
+        // uploadPictureById(fileUrl, userId).then(({ rows }) => {
+        //     console.log(rows);
+        //     res.json({
+        //         success: true,
+        //         image: rows[0],
+        //     });
+        // }); // im then block send success response back
+
+        // // post what came from the file sent from app.js to add-formdata & its body contains (file, desc)
+    }
+);
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

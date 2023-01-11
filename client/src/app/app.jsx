@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Logo } from "../components/Logocomponent";
 import { ProfilePic } from "../components/ProfilePic";
+import { UploadProfilePicture } from "../components/Uploader";
 
 export const App = () => {
     const [user, setUser] = useState([]);
@@ -16,10 +17,10 @@ export const App = () => {
 
     return (
         <>
-            <Logo firstname={user.firstname} />
-            <ProfilePic url={user.profilepicurl} />
+            <Logo />
+            <ProfilePic user={user} />
+            <UploadProfilePicture userId={user.id} />
             <h5>{user.email}</h5>
-            <ProfilePic />
         </>
     );
 };
