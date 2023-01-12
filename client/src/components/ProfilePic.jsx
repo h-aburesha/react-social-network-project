@@ -1,4 +1,4 @@
-export const ProfilePic = ({ user }) => {
+export const ProfilePic = ({ user, onClick }) => {
     console.log({ user });
 
     // const borderColor = loggedIn ? "green" : "grey";
@@ -6,7 +6,11 @@ export const ProfilePic = ({ user }) => {
 
     return (
         <div className="avatar">
-            <img src={user?.profilepicurl} alt={user?.firstname} />
+            <img
+                onClick={onClick}
+                src={user?.profilepicurl}
+                alt={user?.firstname}
+            />
         </div>
     );
 };

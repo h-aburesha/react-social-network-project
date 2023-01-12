@@ -5,6 +5,11 @@ import { UploadProfilePicture } from "../components/Uploader";
 
 export const App = () => {
     const [user, setUser] = useState([]);
+    const [showFileUpload, setShowFileUpload] = useState(false);
+
+    const handleProfilePictureClick = () => {
+        setShowFileUpload(!showFileUpload);
+    };
 
     useEffect(() => {
         (async () => {
@@ -18,8 +23,16 @@ export const App = () => {
     return (
         <>
             <Logo />
-            <ProfilePic user={user} />
-            <UploadProfilePicture userId={user.id} />
+
+            <ProfilePic user={user} onClick={handleProfilePictureClick} />
+            {showFileUpload && (
+                <UploadProfilePicture
+                    userId={user.id}
+                    onClick={handleProfilePictureClick}
+                />
+            )}
+            <hr />
+            <hr />
             <h5>{user.email}</h5>
         </>
     );

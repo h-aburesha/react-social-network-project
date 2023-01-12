@@ -51,6 +51,7 @@ export class LoginForm extends Component<any, LoginState> {
                     // not neeeded because page HAS to be reloaded after cookie is set as LoggedIn
                     // only location.replace("/") should be used to redirect to root
                     location.replace("/");
+                    // -- check <Navigate/> below ---
                 }
             });
     };
