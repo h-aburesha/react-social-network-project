@@ -23,7 +23,7 @@ export const App = () => {
     return (
         <>
             <Logo />
-
+            <hr />
             <ProfilePic user={user} onClick={handleProfilePictureClick} />
             {showFileUpload && (
                 <UploadProfilePicture
@@ -31,7 +31,6 @@ export const App = () => {
                     onClick={handleProfilePictureClick}
                 />
             )}
-            <hr />
             <hr />
             <h5>{user.email}</h5>
         </>
