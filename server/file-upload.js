@@ -3,7 +3,6 @@ const path = require("path");
 const uidSafe = require("uid-safe");
 const aws = require("aws-sdk");
 const fs = require("fs");
-const { AWS_KEY, AWS_SECRET, AWS_BUCKET } = process.env;
 
 const diskStorage = multer.diskStorage({
     filename: (req, file, callback) => {
@@ -21,14 +20,16 @@ const uploader = multer({
     },
 });
 
-const s3 = new aws.S3({
-    accessKeyId: AWS_KEY,
-    secretAccessKey: AWS_SECRET,
-});
-
 function fileUpload(req, res, next) {
-    console.log("file: ", req.file);
-    // console.log( "process.env.AWS_BUCKET");
+    const { AWS_KEY, AWS_SECRET, AWS_BUCKET } = process.env;
+
+    const s3 = new aws.S3({
+        accessKeyId: AWS_KEY,
+        secretAccessKey: AWS_SECRET,
+    });
+
+    // console.log("file: ", req.file);
+    // console.log("process.env.AWS_BUCKET");
     // console.log("AWS Crap: ", AWS_KEY, AWS_SECRET, AWS_BUCKET);
     if (!req.file) {
         console.log("[socialnetwork:s3] file not there");

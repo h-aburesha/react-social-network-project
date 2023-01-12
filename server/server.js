@@ -159,8 +159,11 @@ app.post(
     uploader.single("file"),
     fileUpload,
     (req, res) => {
+        const { fileUrl } = res.locals;
         const { userId } = req.body;
-        console.log("userId: ", req.body);
+        console.log("userId: ", userId, "fileUrl: ", fileUrl);
+        uploadPictureById(userId, fileUrl);
+
         // const { fileUrl } = res.locals;
         // if (!req.file) {
         //     res.json({

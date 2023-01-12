@@ -1,12 +1,12 @@
 import { createRef, useState } from "react";
 
-export const UploadProfilePicture = ({ userId }) => {
+export const UploadProfilePicture = ({ userId, onClick }) => {
     const [picture, setPicture] = useState(null);
     const fileInput = createRef();
 
     const handleChange = (event) => {
         setPicture(event.target.files[0]);
-        console.log("handleSubmit evt: ", event);
+        console.log("handleSubmit evt: ", event, "userId", userId);
     };
 
     const handleSubmit = async (event) => {
@@ -19,11 +19,12 @@ export const UploadProfilePicture = ({ userId }) => {
         // console.log(("event.target.files[0]: ", event.target.files));
 
         formData.append("file", fileInput.current.files[0]);
+        formData.append("userId", userId);
+        // sending userId back to the server as second parameter for uploadPictureById()
 
         fetch("/upload-profile-pic", {
             method: "POST",
             body: formData,
-            userId,
         })
             .then((res) => {
                 return res.json();
