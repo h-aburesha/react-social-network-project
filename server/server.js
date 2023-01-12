@@ -159,18 +159,22 @@ app.post(
     uploader.single("file"),
     fileUpload,
     (req, res) => {
+        if (!req.file) {
+            res.json({
+                success: false,
+            });
+            return;
+        }
+
         const { fileUrl } = res.locals;
         const { userId } = req.body;
         console.log("userId: ", userId, "fileUrl: ", fileUrl);
-        uploadPictureById(userId, fileUrl);
-
-        // const { fileUrl } = res.locals;
-        // if (!req.file) {
-        //     res.json({
-        //         success: false,
-        //     });
-        //     return;
-        // }
+        uploadPictureById(userId, fileUrl).then(({ rows }) => {
+            res.json({
+                success: true,
+                user: rows[0],
+            });
+        });
 
         // // console.log(username, title, description, "req.body", fileUrl);
         // uploadPictureById(fileUrl, userId).then(({ rows }) => {

@@ -1,6 +1,6 @@
 import { createRef, useState } from "react";
 
-export const UploadProfilePicture = ({ userId, onClick }) => {
+export const UploadProfilePicture = ({ userId, onUpdate }) => {
     const [picture, setPicture] = useState(null);
     const fileInput = createRef();
 
@@ -30,8 +30,13 @@ export const UploadProfilePicture = ({ userId, onClick }) => {
                 return res.json();
             })
             .then((data) => {
-                console.log("file data? :", data);
+                onUpdate();
+                console.log("I have updated something :", data);
+            })
+            .catch((error) => {
+                console.log(error, "error in profile/post: ");
             });
+
         setPicture(null);
     };
 

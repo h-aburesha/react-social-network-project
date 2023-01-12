@@ -20,6 +20,17 @@ export const App = () => {
         })();
     }, []);
 
+    const handleUpdateSuccess = () => {
+        useEffect(() => {
+            (async () => {
+                const data = await fetch(`/user`).then((response) =>
+                    response.json()
+                );
+                setUser(data.user);
+            })();
+        }, []);
+    };
+
     return (
         <>
             <Logo />
@@ -29,6 +40,7 @@ export const App = () => {
                 <UploadProfilePicture
                     userId={user.id}
                     onClick={handleProfilePictureClick}
+                    onUpdate={handleUpdateSuccess}
                 />
             )}
             <hr />
