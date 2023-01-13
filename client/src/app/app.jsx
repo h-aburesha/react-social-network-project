@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Logo } from "../components/Logocomponent";
 import { ProfilePic } from "../components/ProfilePic";
+import { UserProfile } from "../components/UserProfile/UserProfile";
 import { UploadProfilePicture } from "../components/Uploader";
 
 export const App = () => {
@@ -13,37 +14,31 @@ export const App = () => {
 
     useEffect(() => {
         (async () => {
-            const data = await fetch(`/user`).then((response) =>
-                response.json()
-            );
+            const response = await fetch(`/user`);
+            const data = await response.json();
             setUser(data.user);
         })();
     }, []);
 
-    const handleUpdateSuccess = () => {
-        useEffect(() => {
-            (async () => {
-                const data = await fetch(`/user`).then((response) =>
-                    response.json()
-                );
-                setUser(data.user);
-            })();
-        }, []);
-    };
+    function updatePic(file) {
+        setUser({ ...user, profilepicurl: file });
+    }
 
     return (
         <>
             <Logo />
+
             <hr />
             <ProfilePic user={user} onClick={handleProfilePictureClick} />
             {showFileUpload && (
-                <UploadProfilePicture
-                    userId={user.id}
-                    onClick={handleProfilePictureClick}
-                    onUpdate={handleUpdateSuccess}
-                />
+                <UploadProfilePicture userId={user.id} updatePic={updatePic} />
             )}
             <hr />
+            <UserProfile
+                user={user}
+                onClick={handleProfilePictureClick}
+                updatePic={updatePic}
+            />
             <h5>{user.email}</h5>
         </>
     );

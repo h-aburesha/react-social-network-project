@@ -175,17 +175,6 @@ app.post(
                 user: rows[0],
             });
         });
-
-        // // console.log(username, title, description, "req.body", fileUrl);
-        // uploadPictureById(fileUrl, userId).then(({ rows }) => {
-        //     console.log(rows);
-        //     res.json({
-        //         success: true,
-        //         image: rows[0],
-        //     });
-        // }); // im then block send success response back
-
-        // // post what came from the file sent from app.js to add-formdata & its body contains (file, desc)
     }
 );
 
