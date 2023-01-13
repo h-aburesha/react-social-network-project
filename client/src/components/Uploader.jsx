@@ -1,6 +1,6 @@
 import { createRef, useState } from "react";
 
-const UploadProfilePicture = ({ userId, onUpdate, updatePic }) => {
+const UploadProfilePicture = ({ userId, updatePic }) => {
     const [picture, setPicture] = useState(null);
     const fileInput = createRef();
 
