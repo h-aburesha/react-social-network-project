@@ -22,6 +22,8 @@ ADD COLUMN loggedin boolean DEFAULT false;
 
 ALTER TABLE users ALTER COLUMN profilepicurl SET DEFAULT 'https://s3.amazonaws.com/spicedling/abWAauCyoXO7Jb4ga3_dIAtCZwoi29pj.png';
 
+ALTER TABLE users ADD COLUMN bio character varying(255) DEFAULT NULL;
+
 -- CREATE TABLE images(
 --     id SERIAL PRIMARY KEY,
 --     image_url VARCHAR NOT NULL,
