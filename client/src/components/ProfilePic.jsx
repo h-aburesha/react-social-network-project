@@ -1,4 +1,4 @@
-export const ProfilePic = ({ user, onClick }) => {
+const ProfilePic = ({ user, onClick }) => {
     return (
         <div className="avatar">
             <img
@@ -9,3 +9,5 @@ export const ProfilePic = ({ user, onClick }) => {
         </div>
     );
 };
+
+export default ProfilePic;

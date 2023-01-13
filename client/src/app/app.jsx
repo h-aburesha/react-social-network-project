@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Logo } from "../components/Logocomponent";
-import { ProfilePic } from "../components/ProfilePic";
-import { UserProfile } from "../components/UserProfile/UserProfile";
-import { UploadProfilePicture } from "../components/Uploader";
+import ProfilePic from "../components/ProfilePic";
+import UserProfile from "../components/UserProfile/UserProfile";
+import UploadProfilePicture from "../components/Uploader";
 
 export const App = () => {
     const [user, setUser] = useState([]);
@@ -39,7 +39,7 @@ export const App = () => {
                 onClick={handleProfilePictureClick}
                 updatePic={updatePic}
             />
-            <h5>{user.email}</h5>
+            <hr />
         </>
     );
 };

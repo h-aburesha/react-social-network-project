@@ -1,6 +1,6 @@
 import { createRef, useState } from "react";
 
-export const UploadProfilePicture = ({ userId, onUpdate, updatePic }) => {
+const UploadProfilePicture = ({ userId, onUpdate, updatePic }) => {
     const [picture, setPicture] = useState(null);
     const fileInput = createRef();
 
@@ -56,3 +56,5 @@ export const UploadProfilePicture = ({ userId, onUpdate, updatePic }) => {
         </form>
     );
 };
+
+export default UploadProfilePicture;
