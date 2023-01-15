@@ -10,7 +10,6 @@ const FindPeople = () => {
             .then((data) => {
                 setUsers(data.users);
                 console.log("RES(DATA) Users from DB:", data); // data = fetched data from server
-                console.log("Type of USERS??: ", typeof users);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -28,12 +27,11 @@ const FindPeople = () => {
                 placeholder="Search for users..."
             />
 
-            {/* 
             <ul>
-                {users.map((user, index) => (
-                    <li key={index}>{user?.firstname}</li>
+                {users.map((user) => (
+                    <li key={user?.id}>{user?.firstname}</li>
                 ))}
-            </ul> */}
+            </ul>
         </div>
     );
 
