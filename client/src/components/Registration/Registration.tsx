@@ -1,5 +1,5 @@
 import { Component, FormEvent } from "react";
-import { Logo } from "./Logocomponent";
+import { Logo } from "../Logo/Logocomponent";
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router";
 

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Logo } from "../components/Logocomponent";
-import ProfilePic from "../components/ProfilePic";
+import { Logo } from "../components/Logo/Logocomponent";
+import ProfilePic from "../components/ProfilePic/ProfilePic";
 import UserProfile from "../components/UserProfile/UserProfile";
-import UploadProfilePicture from "../components/Uploader";
+import UploadProfilePicture from "../components/Uploader/Uploader";
 
 export const App = () => {
     const [user, setUser] = useState([]);

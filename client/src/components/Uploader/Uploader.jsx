@@ -31,7 +31,7 @@ const UploadProfilePicture = ({ userId, updatePic }) => {
             })
             .then(({ user }) => {
                 updatePic(user.profilepicurl);
-                console.log("I have updated something :", user);
+                console.log("I have updated profilepic :", user.profilepicurl);
             })
             .catch((error) => {
                 console.log("error in profile/post: ", error);

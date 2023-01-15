@@ -1,8 +1,8 @@
-import { LoginForm } from "./LoginForm";
-import { Logo } from "./Logocomponent";
-import { Registration } from "./Registration";
+import { LoginForm } from "./LoginForm/LoginForm";
+import { Logo } from "./Logo/Logocomponent";
+import { Registration } from "./Registration/Registration";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ResetPassword from "./Resetpassword";
+import ResetPassword from "./Resetpassword/Resetpassword";
 
 export function Welcome() {
     return (

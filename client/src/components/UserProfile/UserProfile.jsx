@@ -1,4 +1,4 @@
-import ProfilePic from "../ProfilePic";
+import ProfilePic from "../ProfilePic/ProfilePic";
 import "./UserProfile.css";
 import { useState } from "react";
 
