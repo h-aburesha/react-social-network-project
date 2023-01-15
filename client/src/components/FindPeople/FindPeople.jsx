@@ -29,7 +29,9 @@ const FindPeople = () => {
 
             <ul>
                 {users.map((user) => (
-                    <li key={user?.id}>{user?.firstname}</li>
+                    <li key={user?.id}>
+                        {user?.firstname} - {user?.lastname}
+                    </li>
                 ))}
             </ul>
         </div>

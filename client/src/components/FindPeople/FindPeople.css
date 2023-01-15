@@ -5,6 +5,16 @@
     width: 100%;
 }
 
+.find-people ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.find-people li {
+    display: flex;
+}
+
 .find-people input {
     padding: 12px 20px;
     margin: 8px 0;
