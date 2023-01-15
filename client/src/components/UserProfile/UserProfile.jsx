@@ -2,8 +2,8 @@ import ProfilePic from "../ProfilePic";
 import "./UserProfile.css";
 import { useState } from "react";
 
-const UserProfile = ({ user, onClick }) => {
-    const [bio, setBio] = useState("No bio yet.");
+const UserProfile = ({ user, onClick, updateBio }) => {
+    const [bio, setBio] = useState(user?.bio || "No bio yet.");
     const [editing, setEditing] = useState(false);
 
     const handleChange = (event) => {
@@ -11,14 +11,26 @@ const UserProfile = ({ user, onClick }) => {
         setBio(event.target.value);
     };
 
-    const handleSave = async (event) => {
+    const handleBioSubmit = async (event) => {
         event.preventDefault();
-        console.log("handleSaveEvent: ", bio);
+        console.log("handleSaveEvent: ", bio, user?.id);
         fetch("/update-bio", {
             method: "POST",
-            body: formData,
-        });
-        // DB & Server Logic
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                bio: bio,
+                userId: user?.id,
+            }),
+        })
+            .then(() => {
+                updateBio(bio);
+                console.log("I have updated bio :");
+            })
+            .catch((error) => {
+                console.log("error in bio/post: ", error);
+            });
 
         setEditing(false);
     };
@@ -32,9 +44,10 @@ const UserProfile = ({ user, onClick }) => {
             <div className="user-profile">
                 <ProfilePic user={user} onClick={onClick} />
                 Profile Name: {user?.firstname} {user?.lastname}
+                <h4> About me: {user?.bio}</h4>
                 <div style={{ display: editing ? "block" : "none" }}>
                     <textarea name="bio" value={bio} onChange={handleChange} />
-                    <button onClick={handleSave}>Save</button>
+                    <button onClick={handleBioSubmit}>Save</button>
                 </div>
                 <button onClick={handleEdit}>
                     {editing ? "Cancel" : "Edit"}

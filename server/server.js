@@ -13,6 +13,7 @@ const {
     updatePassword,
     getUserDataById,
     uploadPictureById,
+    updateBio,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -177,6 +178,25 @@ app.post(
         });
     }
 );
+
+app.post("/update-bio", async (req, res) => {
+    try {
+        const { bio, userId } = req.body;
+        console.log("bio: ", bio, "userId: ", userId);
+        const { rows } = await updateBio(userId, bio);
+        console.log(rows);
+
+        res.json({
+            success: true,
+            user: rows[0], // All data fetched for logged in user (name, profile, status, etc.)
+        });
+    } catch (error) {
+        console.log("err post('/update-bio'): ", error);
+        res.json({
+            success: false,
+        });
+    }
+});
 
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

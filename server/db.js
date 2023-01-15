@@ -18,6 +18,13 @@ module.exports.uploadPictureById = (userId, url) => {
     );
 };
 
+module.exports.updateBio = (userId, bio) => {
+    return db.query(
+        `UPDATE users SET bio = $2 WHERE users.id = $1 RETURNING *;`,
+        [userId, bio]
+    );
+};
+
 module.exports.addNewUser = (firstname, lastname, email, hashedPWD) => {
     return db.query(
         `INSERT INTO users (firstname, lastname, email, password) VALUES ($1, $2, $3, $4) RETURNING *;`,

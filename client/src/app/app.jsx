@@ -24,6 +24,10 @@ export const App = () => {
         setUser({ ...user, profilepicurl: file });
     }
 
+    function updateBio(bio) {
+        setUser({ ...user, bio: bio });
+    }
+
     return (
         <>
             <Logo />
@@ -38,6 +42,7 @@ export const App = () => {
                 user={user}
                 onClick={handleProfilePictureClick}
                 updatePic={updatePic}
+                updateBio={updateBio}
             />
             <hr />
         </>
