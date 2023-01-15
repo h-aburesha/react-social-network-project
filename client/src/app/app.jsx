@@ -3,6 +3,7 @@ import { Logo } from "../components/Logo/Logocomponent";
 import ProfilePic from "../components/ProfilePic/ProfilePic";
 import UserProfile from "../components/UserProfile/UserProfile";
 import UploadProfilePicture from "../components/Uploader/Uploader";
+import FindPeople from "../components/FindPeople/FindPeople";
 
 export const App = () => {
     const [user, setUser] = useState([]);
@@ -37,6 +38,7 @@ export const App = () => {
             )}
             <hr />
             <Logo />
+            <FindPeople />
             <hr />
             <UserProfile
                 user={user}
@@ -44,6 +46,7 @@ export const App = () => {
                 updatePic={updatePic}
                 updateBio={updateBio}
             />
+
             <hr />
         </>
     );

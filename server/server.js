@@ -14,6 +14,7 @@ const {
     getUserDataById,
     uploadPictureById,
     updateBio,
+    getAllUsers,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -196,6 +197,26 @@ app.post("/update-bio", async (req, res) => {
             success: false,
         });
     }
+});
+
+app.get("/users", async (req, res) => {
+    try {
+        // const { userId } = req.session;
+        getAllUsers().then(({ rows }) => {
+            res.json({
+                success: true,
+                users: rows, // All data fetched for registered users// OPTIMIZE LATER <---------
+            });
+            console.log("getAllUsers rows: ", rows);
+        });
+    } catch (error) {
+        console.log("err get('/users'): ", error);
+        res.json({
+            success: false,
+        });
+    }
+
+    // res.json({ userId: req.session.userId }); // instead of null. use value from req.session
 });
 
 app.get("*", function (req, res) {
