@@ -14,6 +14,7 @@ const UserProfile = ({ user, onClick, updateBio }) => {
     const handleBioSubmit = async (event) => {
         event.preventDefault();
         console.log("handleSaveEvent: ", bio, user?.id);
+
         fetch("/update-bio", {
             method: "POST",
             headers: {

@@ -30,13 +30,13 @@ export const App = () => {
 
     return (
         <>
-            <Logo />
-
             <hr />
             <ProfilePic user={user} onClick={handleProfilePictureClick} />
             {showFileUpload && (
                 <UploadProfilePicture userId={user.id} updatePic={updatePic} />
             )}
+            <hr />
+            <Logo />
             <hr />
             <UserProfile
                 user={user}
