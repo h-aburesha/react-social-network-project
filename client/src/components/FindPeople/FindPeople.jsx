@@ -9,7 +9,7 @@ const FindPeople = () => {
         fetchUsers()
             .then((data) => {
                 setUsers(data.users);
-                console.log("RES(DATA) Users from DB:", data); // data = fetched data from server
+                console.log("RES(DATA) Users from DB:", data);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -32,7 +32,6 @@ const FindPeople = () => {
                 onChange={handleSearchChange}
                 placeholder="Pick new cherries 🍒 ... "
             />
-
             <ul>
                 {users.map((user) => (
                     <li className="profile-card" key={user?.id}>
@@ -59,9 +58,8 @@ const FindPeople = () => {
     }
 
     async function fetchMatchingUsers(search) {
-        // Make API call to get users whose names match the search query
-        const res = await fetch(`/users/search/?name=${search}`);
-        const data = await res.json();
+        const response = await fetch(`/users/search/?name=${search}`);
+        const data = await response.json();
         return data;
     }
 };
