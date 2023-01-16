@@ -16,7 +16,7 @@ const FindPeople = () => {
 
     useEffect(() => {
         fetchMatchingUsers(search)
-            .then((res) => setUsers(res))
+            .then((data) => setUsers(data.users))
             .catch((err) => console.log(err));
     }, [search]);
 
@@ -36,7 +36,7 @@ const FindPeople = () => {
             <ul>
                 {users.map((user) => (
                     <li key={user?.id}>
-                        {/* {user?.id} - {user?.firstname} - {user?.lastname} */}
+                        {user?.id} - {user?.firstname} - {user?.lastname}
                     </li>
                 ))}
             </ul>
@@ -51,7 +51,7 @@ const FindPeople = () => {
 
     async function fetchMatchingUsers(search) {
         // Make API call to get users whose names match the search query
-        const res = await fetch(`/users/search/?search=${search}`);
+        const res = await fetch(`/users/search/?name=${search}`);
         const data = await res.json();
         return data;
     }

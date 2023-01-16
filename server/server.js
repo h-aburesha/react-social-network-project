@@ -15,6 +15,7 @@ const {
     uploadPictureById,
     updateBio,
     getAllUsers,
+    getMatchingUsers,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -220,14 +221,14 @@ app.get("/users", async (req, res) => {
 
 app.get("/users/search", async (req, res) => {
     try {
-        const { search } = req.query;
-        // getAllUsers().then(({ rows }) => {
-        //     res.json({
-        //         success: true,
-        //         users: rows, // All data fetched for registered users// OPTIMIZE LATER <---------
-        //     });
-        console.log("req.querey: ", req.query.search);
-        // });
+        const { name } = req.query;
+        getMatchingUsers(name).then(({ rows }) => {
+            console.log(rows);
+            res.json({
+                success: true,
+                users: rows,
+            });
+        });
     } catch (error) {
         // console.log("err get('/users/search'): ", error);
         // res.json({

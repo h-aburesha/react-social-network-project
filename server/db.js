@@ -64,6 +64,13 @@ module.exports.updatePassword = (email, hashedPWD) => {
     );
 };
 
+module.exports.getMatchingUsers = (val) => {
+    return db.query(
+        `SELECT * FROM users WHERE firstname ILIKE $1 OR lastname ILIKE $1;`,
+        [val + "%"]
+    );
+};
+
 //SELECT * FROM reset_codes WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';
 
 // module.exports.getImgById = (id) => {
