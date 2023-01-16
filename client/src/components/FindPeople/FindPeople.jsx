@@ -14,6 +14,12 @@ const FindPeople = () => {
             .catch((err) => console.log(err));
     }, []);
 
+    useEffect(() => {
+        fetchMatchingUsers(search)
+            .then((res) => setUsers(res))
+            .catch((err) => console.log(err));
+    }, [search]);
+
     const handleSearchChange = (event) => {
         console.log(event.target.value);
         setSearch(event.target.value);
@@ -24,13 +30,13 @@ const FindPeople = () => {
             <input
                 type="text"
                 onChange={handleSearchChange}
-                placeholder="Search for users..."
+                placeholder="Pick new cherries 🍒 ... "
             />
 
             <ul>
                 {users.map((user) => (
                     <li key={user?.id}>
-                        {user?.firstname} - {user?.lastname}
+                        {/* {user?.id} - {user?.firstname} - {user?.lastname} */}
                     </li>
                 ))}
             </ul>
@@ -42,20 +48,13 @@ const FindPeople = () => {
         const data = await response.json();
         return data;
     }
+
+    async function fetchMatchingUsers(search) {
+        // Make API call to get users whose names match the search query
+        const res = await fetch(`/users/search/?search=${search}`);
+        const data = await res.json();
+        return data;
+    }
 };
 
 export default FindPeople;
-
-// useEffect(() => {
-//     // Make request for users whose names match the search query
-//     fetchMatchingUsers(search)
-//         .then((res) => setUsers(res))
-//         .catch((err) => console.log(err));
-// }, [search]);
-
-// async function fetchMatchingUsers(search) {
-//     // Make API call to get users whose names match the search query
-//     const res = await fetch(`/api/users/search?name=${search}`);
-//     const data = await res.json();
-//     return data;
-// }
