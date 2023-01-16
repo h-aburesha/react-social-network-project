@@ -12,7 +12,7 @@ module.exports.getUserDataById = (userId) => {
 };
 
 module.exports.getAllUsers = () => {
-    return db.query(`SELECT * FROM users`);
+    return db.query(`SELECT * FROM users ORDER BY users.id LIMIT 5`);
 };
 
 module.exports.uploadPictureById = (userId, url) => {
@@ -66,7 +66,7 @@ module.exports.updatePassword = (email, hashedPWD) => {
 
 module.exports.getMatchingUsers = (val) => {
     return db.query(
-        `SELECT * FROM users WHERE firstname ILIKE $1 OR lastname ILIKE $1;`,
+        `SELECT * FROM users WHERE firstname ILIKE $1 OR lastname ILIKE $1 ORDER BY users.id LIMIT 5;`,
         [val + "%"]
     );
 };

@@ -35,8 +35,17 @@ const FindPeople = () => {
 
             <ul>
                 {users.map((user) => (
-                    <li key={user?.id}>
-                        {user?.id} - {user?.firstname} - {user?.lastname}
+                    <li className="profile-card" key={user?.id}>
+                        <div className="profile-image">
+                            <img
+                                src={user?.profilepicurl}
+                                alt={user?.firstname}
+                            />
+                        </div>
+                        <div className="profile-details">
+                            {" "}
+                            {user?.id} - {user?.firstname} - {user?.lastname}
+                        </div>
                     </li>
                 ))}
             </ul>
