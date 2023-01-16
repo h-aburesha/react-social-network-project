@@ -167,10 +167,9 @@ app.post(
             });
             return;
         }
-
         const { fileUrl } = res.locals;
         const { userId } = req.body;
-        console.log("userId: ", userId, "fileUrl: ", fileUrl);
+        // console.log("userId: ", userId, "fileUrl: ", fileUrl);
         uploadPictureById(userId, fileUrl).then(({ rows }) => {
             res.json({
                 success: true,
@@ -183,9 +182,9 @@ app.post(
 app.post("/update-bio", async (req, res) => {
     try {
         const { bio, userId } = req.body;
-        console.log("bio: ", bio, "userId: ", userId);
+        // console.log("bio: ", bio, "userId: ", userId);
         const { rows } = await updateBio(userId, bio);
-        console.log(rows);
+        // console.log(rows);
 
         res.json({
             success: true,
@@ -207,13 +206,33 @@ app.get("/users", async (req, res) => {
                 success: true,
                 users: rows, // All data fetched for registered users// OPTIMIZE LATER <---------
             });
-            console.log("getAllUsers rows: ", rows);
+            // console.log("getAllUsers rows: ", rows);
         });
     } catch (error) {
         console.log("err get('/users'): ", error);
         res.json({
             success: false,
         });
+    }
+
+    // res.json({ userId: req.session.userId }); // instead of null. use value from req.session
+});
+
+app.get("/users/search", async (req, res) => {
+    try {
+        const { search } = req.query;
+        // getAllUsers().then(({ rows }) => {
+        //     res.json({
+        //         success: true,
+        //         users: rows, // All data fetched for registered users// OPTIMIZE LATER <---------
+        //     });
+        console.log("req.querey: ", req.query.search);
+        // });
+    } catch (error) {
+        // console.log("err get('/users/search'): ", error);
+        // res.json({
+        //     success: false,
+        // });
     }
 
     // res.json({ userId: req.session.userId }); // instead of null. use value from req.session
