@@ -1,6 +1,8 @@
 import ProfilePic from "../ProfilePic/ProfilePic";
+import NavigationBar from "../NavigationBar/NavigationBar";
 import "./UserProfile.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const UserProfile = ({ user, onClick, updateBio }) => {
     const [bio, setBio] = useState(user?.bio || "No bio yet.");

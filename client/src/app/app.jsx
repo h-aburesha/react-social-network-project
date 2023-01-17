@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
-import { Logo } from "../components/Logo/Logocomponent";
+import Logo from "../components/Logo/Logocomponent";
 import ProfilePic from "../components/ProfilePic/ProfilePic";
 import UserProfile from "../components/UserProfile/UserProfile";
 import UploadProfilePicture from "../components/Uploader/Uploader";
+import NavigationBar from "../components/NavigationBar/NavigationBar";
 import FindPeople from "../components/FindPeople/FindPeople";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import { Link } from "react-router-dom";
+import { Navigate } from "react-router";
 import "./app.css";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -42,13 +47,52 @@ export const App = () => {
 
     return (
         <>
-            <hr />
-            <ProfilePic user={user} onClick={handleProfilePictureClick} />
-            {showFileUpload && (
-                <UploadProfilePicture userId={user.id} updatePic={updatePic} />
-            )}
-            <hr />
-            <div className="redux-counter">
+            {/* <NavigationBar /> */}
+
+            <BrowserRouter>
+                <header className="header">
+                    <Logo />
+                    <div className="nav-right">
+                        <ProfilePic
+                            user={user}
+                            onClick={handleProfilePictureClick}
+                        />
+                        <Link to="/users"> Find new people? 🍒 </Link>
+                        <button>Logout</button>
+                    </div>
+                </header>
+                <main>
+                    <Routes>
+                        <Route path="/users" element={<FindPeople />} />
+                        <Route
+                            path="/"
+                            element={
+                                <UserProfile
+                                    user={user}
+                                    onClick={handleProfilePictureClick}
+                                    updatePic={updatePic}
+                                    updateBio={updateBio}
+                                />
+                            }
+                        />
+                        <Route
+                            path="/navigation"
+                            element={
+                                <NavigationBar
+                                    user={user}
+                                    onClick={handleProfilePictureClick}
+                                    updatePic={updatePic}
+                                    updateBio={updateBio}
+                                />
+                            }
+                        />
+                    </Routes>
+                </main>
+            </BrowserRouter>
+        </>
+    );
+};
+/*             <div className="redux-counter">
                 <h1> The count is: {count}</h1>
                 <div className="redux-buttons">
                     <button onClick={() => dispatch(increment())}>
@@ -62,18 +106,4 @@ export const App = () => {
                     </button>
                 </div>
             </div>
-            <hr />
-            <Logo />
-            <FindPeople />
-            <hr />
-            <UserProfile
-                user={user}
-                onClick={handleProfilePictureClick}
-                updatePic={updatePic}
-                updateBio={updateBio}
-            />
-
-            <hr />
-        </>
-    );
-};
+            */

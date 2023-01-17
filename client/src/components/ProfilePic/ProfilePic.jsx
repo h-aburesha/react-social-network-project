@@ -1,6 +1,8 @@
+import "./ProfilePic.css";
+
 const ProfilePic = ({ user, onClick }) => {
     return (
-        <div className="avatar">
+        <div className="profile-pic">
             <img
                 onClick={onClick}
                 src={user?.profilepicurl}
