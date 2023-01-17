@@ -10,7 +10,6 @@ export function Welcome() {
     return (
         <div>
             <Logo />
-
             <div>
                 <BrowserRouter>
                     <Routes>

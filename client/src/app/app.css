@@ -1,0 +1,10 @@
+.redux-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.redux-buttons {
+    display: flex;
+    flex-direction: row;
+}

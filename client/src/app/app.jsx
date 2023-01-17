@@ -4,6 +4,7 @@ import ProfilePic from "../components/ProfilePic/ProfilePic";
 import UserProfile from "../components/UserProfile/UserProfile";
 import UploadProfilePicture from "../components/Uploader/Uploader";
 import FindPeople from "../components/FindPeople/FindPeople";
+import "./app.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment, incrementByAmount } from "../Redux/counter";
@@ -47,12 +48,20 @@ export const App = () => {
                 <UploadProfilePicture userId={user.id} updatePic={updatePic} />
             )}
             <hr />
-            <h1> The count is: {count}</h1>
-            <button onClick={() => dispatch(increment())}>increment</button>
-            <button onClick={() => dispatch(decrement())}>decrement</button>
-            <button onClick={() => dispatch(incrementByAmount(33))}>
-                Increment by 33
-            </button>
+            <div className="redux-counter">
+                <h1> The count is: {count}</h1>
+                <div className="redux-buttons">
+                    <button onClick={() => dispatch(increment())}>
+                        Increment
+                    </button>
+                    <button onClick={() => dispatch(decrement())}>
+                        Decrement
+                    </button>
+                    <button onClick={() => dispatch(incrementByAmount(33))}>
+                        Increment by 33
+                    </button>
+                </div>
+            </div>
             <hr />
             <Logo />
             <FindPeople />
