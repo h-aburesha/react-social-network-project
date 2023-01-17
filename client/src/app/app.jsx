@@ -56,6 +56,12 @@ export const App = () => {
                             user={user}
                             onClick={handleProfilePictureClick}
                         />
+                        {showFileUpload && (
+                            <UploadProfilePicture
+                                userId={user.id}
+                                updatePic={updatePic}
+                            />
+                        )}
                         <Link to="/users"> Find new people? 🍒 </Link>
                         <button>Logout</button>
                     </div>
@@ -79,6 +85,7 @@ export const App = () => {
                 <main>
                     <Routes>
                         <Route path="/users" element={<FindPeople />} />
+
                         <Route
                             path="/"
                             element={
