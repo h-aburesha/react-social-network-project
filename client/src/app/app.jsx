@@ -10,15 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment, incrementByAmount } from "../Redux/counter";
 
 export const App = () => {
-    const [user, setUser] = useState([]);
-    const [showFileUpload, setShowFileUpload] = useState(false);
-
     /* --------------- REDUX Sandbox --------------- */
 
     const { count } = useSelector((state) => state.counter);
     const dispatch = useDispatch();
 
     /* --------------- REDUX Sandbox --------------- */
+
+    const [user, setUser] = useState([]);
+    const [showFileUpload, setShowFileUpload] = useState(false);
 
     const handleProfilePictureClick = () => {
         setShowFileUpload(!showFileUpload);

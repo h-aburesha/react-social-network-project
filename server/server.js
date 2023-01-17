@@ -33,17 +33,16 @@ app.use(
 );
 
 app.get("/user/id.json", (req, res) => {
-    res.json({ userId: req.session.userId }); // instead of null. use value from req.session
+    res.json({ userId: req.session.userId });
 });
 
 app.get("/user", async (req, res) => {
     try {
         const { userId } = req.session;
         const { rows } = await getUserDataById(userId);
-        // console.log("getUserDataById rows[0]: ", rows[0]);
         res.json({
             success: true,
-            user: rows[0], // All data fetched for logged in user (name, profile, status, etc.)
+            user: rows[0],
         });
     } catch (error) {
         console.log("err get('/user'): ", error);
@@ -51,8 +50,6 @@ app.get("/user", async (req, res) => {
             success: false,
         });
     }
-
-    // res.json({ userId: req.session.userId }); // instead of null. use value from req.session
 });
 
 app.post("/register", async (req, res) => {
@@ -84,12 +81,9 @@ app.post("/register", async (req, res) => {
 app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
-        // console.log("req.body", req.body);
         const { rows } = await getUserByEmail(email);
-        // console.log("db-email-rows: ", rows);
         if (rows[0]) {
             req.session.userId = rows[0].id;
-            // console.log("req.session.userId:", req.session.userId);
             const passedTest = await encrypt.compare(
                 password,
                 rows[0].password
@@ -170,7 +164,6 @@ app.post(
         }
         const { fileUrl } = res.locals;
         const { userId } = req.body;
-        // console.log("userId: ", userId, "fileUrl: ", fileUrl);
         uploadPictureById(userId, fileUrl).then(({ rows }) => {
             res.json({
                 success: true,
@@ -183,13 +176,10 @@ app.post(
 app.post("/update-bio", async (req, res) => {
     try {
         const { bio, userId } = req.body;
-        // console.log("bio: ", bio, "userId: ", userId);
         const { rows } = await updateBio(userId, bio);
-        // console.log(rows);
-
         res.json({
             success: true,
-            user: rows[0], // All data fetched for logged in user (name, profile, status, etc.)
+            user: rows[0],
         });
     } catch (error) {
         console.log("err post('/update-bio'): ", error);
@@ -201,13 +191,12 @@ app.post("/update-bio", async (req, res) => {
 
 app.get("/users", async (req, res) => {
     try {
-        // const { userId } = req.session;
+        // const { userId } = req.session; // Helpful maybe?
         getAllUsers().then(({ rows }) => {
             res.json({
                 success: true,
-                users: rows, // All data fetched for registered users// OPTIMIZE LATER <---------
+                users: rows, // ---> OPTIMIZE LATER <--- //
             });
-            // console.log("getAllUsers rows: ", rows);
         });
     } catch (error) {
         console.log("err get('/users'): ", error);
@@ -215,25 +204,23 @@ app.get("/users", async (req, res) => {
             success: false,
         });
     }
-
-    // res.json({ userId: req.session.userId }); // instead of null. use value from req.session
 });
 
 app.get("/users/search", async (req, res) => {
     try {
         const { name } = req.query;
         getMatchingUsers(name).then(({ rows }) => {
-            console.log(rows);
+            // console.log(rows);
             res.json({
                 success: true,
                 users: rows,
             });
         });
     } catch (error) {
-        // console.log("err get('/users/search'): ", error);
-        // res.json({
-        //     success: false,
-        // });
+        console.log("err get('/users/search'): ", error);
+        res.json({
+            success: false,
+        });
     }
 
     // res.json({ userId: req.session.userId }); // instead of null. use value from req.session
