@@ -8,7 +8,6 @@ import FindPeople from "../components/FindPeople/FindPeople";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Link } from "react-router-dom";
-import { Navigate } from "react-router";
 import "./app.css";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -61,6 +60,22 @@ export const App = () => {
                         <button>Logout</button>
                     </div>
                 </header>
+
+                <div className="redux-counter">
+                    <h1> The count is: {count}</h1>
+                    <div className="redux-buttons">
+                        <button onClick={() => dispatch(increment())}>
+                            Increment
+                        </button>
+                        <button onClick={() => dispatch(decrement())}>
+                            Decrement
+                        </button>
+                        <button onClick={() => dispatch(incrementByAmount(33))}>
+                            Increment by 33
+                        </button>
+                    </div>
+                </div>
+
                 <main>
                     <Routes>
                         <Route path="/users" element={<FindPeople />} />
@@ -92,7 +107,9 @@ export const App = () => {
         </>
     );
 };
-/*             <div className="redux-counter">
+/*  
+
+<div className="redux-counter">
                 <h1> The count is: {count}</h1>
                 <div className="redux-buttons">
                     <button onClick={() => dispatch(increment())}>
@@ -106,4 +123,6 @@ export const App = () => {
                     </button>
                 </div>
             </div>
-            */
+
+
+*/
