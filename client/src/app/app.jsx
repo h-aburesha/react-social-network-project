@@ -5,9 +5,19 @@ import UserProfile from "../components/UserProfile/UserProfile";
 import UploadProfilePicture from "../components/Uploader/Uploader";
 import FindPeople from "../components/FindPeople/FindPeople";
 
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment, incrementByAmount } from "../Redux/counter";
+
 export const App = () => {
     const [user, setUser] = useState([]);
     const [showFileUpload, setShowFileUpload] = useState(false);
+
+    /* --------------- REDUX Sandbox --------------- */
+
+    const { count } = useSelector((state) => state.counter);
+    const dispatch = useDispatch();
+
+    /* --------------- REDUX Sandbox --------------- */
 
     const handleProfilePictureClick = () => {
         setShowFileUpload(!showFileUpload);
@@ -36,6 +46,13 @@ export const App = () => {
             {showFileUpload && (
                 <UploadProfilePicture userId={user.id} updatePic={updatePic} />
             )}
+            <hr />
+            <h1> The count is: {count}</h1>
+            <button onClick={() => dispatch(increment())}>increment</button>
+            <button onClick={() => dispatch(decrement())}>decrement</button>
+            <button onClick={() => dispatch(incrementByAmount(33))}>
+                Increment by 33
+            </button>
             <hr />
             <Logo />
             <FindPeople />

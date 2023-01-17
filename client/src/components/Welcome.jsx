@@ -4,6 +4,7 @@ import { Registration } from "./Registration/Registration";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ResetPassword from "./Resetpassword/Resetpassword";
 import UserProfile from "./UserProfile/UserProfile";
+import FindPeople from "./FindPeople/FindPeople";
 
 export function Welcome() {
     return (
@@ -14,6 +15,7 @@ export function Welcome() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="/login" element={<LoginForm />} />
+                        <Route path="/users" element={<FindPeople />} />
 
                         <Route
                             path="/password/reset/start"
