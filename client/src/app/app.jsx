@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment, incrementByAmount } from "../Redux/counter";
+
 import Logo from "../components/Logo/Logocomponent";
 import ProfilePic from "../components/ProfilePic/ProfilePic";
 import UserProfile from "../components/UserProfile/UserProfile";
 import UploadProfilePicture from "../components/Uploader/Uploader";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import FindPeople from "../components/FindPeople/FindPeople";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import { Link } from "react-router-dom";
+import OtherProfile from "../components/OtherProfile/OtherProfile";
 import "./app.css";
-
-import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment, incrementByAmount } from "../Redux/counter";
 
 export const App = () => {
     /* --------------- REDUX Sandbox --------------- */
@@ -33,6 +34,7 @@ export const App = () => {
             const response = await fetch(`/user`);
             const data = await response.json();
             setUser(data.user);
+            console.log("RES(DATA) Users from DB:", data);
         })();
     }, []);
 
@@ -85,6 +87,7 @@ export const App = () => {
                 <main>
                     <Routes>
                         <Route path="/users" element={<FindPeople />} />
+                        <Route path="/user/:id" element={<OtherProfile />} />
 
                         <Route
                             path="/"
@@ -114,22 +117,9 @@ export const App = () => {
         </>
     );
 };
-/*  
 
-<div className="redux-counter">
-                <h1> The count is: {count}</h1>
-                <div className="redux-buttons">
-                    <button onClick={() => dispatch(increment())}>
-                        Increment
-                    </button>
-                    <button onClick={() => dispatch(decrement())}>
-                        Decrement
-                    </button>
-                    <button onClick={() => dispatch(incrementByAmount(33))}>
-                        Increment by 33
-                    </button>
-                </div>
-            </div>
+/* 
 
+            
 
 */

@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import "./FindPeople.css";
+import { Link } from "react-router-dom";
 
 const FindPeople = () => {
     const [users, setUsers] = useState([]);
@@ -34,18 +36,20 @@ const FindPeople = () => {
             />
             <ul>
                 {users.map((user) => (
-                    <li className="profile-card" key={user?.id}>
-                        <div className="profile-image">
-                            <img
-                                src={user?.profilepicurl}
-                                alt={user?.firstname}
-                            />
-                        </div>
-                        <div className="profile-details">
-                            {" "}
-                            {user?.id} - {user?.firstname} - {user?.lastname}
-                        </div>
-                    </li>
+                    <Link to={`/user/${user.id}`} key={user.id}>
+                        <li className="profile-card" key={user?.id}>
+                            <div className="profile-image">
+                                <img
+                                    src={user?.profilepicurl}
+                                    alt={user?.firstname}
+                                />
+                            </div>
+                            <div className="profile-details">
+                                {user?.id} - {user?.firstname} -{" "}
+                                {user?.lastname}
+                            </div>
+                        </li>
+                    </Link>
                 ))}
             </ul>
         </div>

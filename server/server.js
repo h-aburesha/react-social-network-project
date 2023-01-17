@@ -222,8 +222,20 @@ app.get("/users/search", async (req, res) => {
             success: false,
         });
     }
+});
 
-    // res.json({ userId: req.session.userId }); // instead of null. use value from req.session
+app.get("/user/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        getUserDataById(id).then(({ rows }) => {
+            console.log(rows);
+            res.json({
+                success: true,
+                user: rows[0],
+            });
+        });
+        console.log(":id ", id);
+    } catch (error) {}
 });
 
 app.get("*", function (req, res) {

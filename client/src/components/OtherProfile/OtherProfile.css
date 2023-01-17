@@ -1,0 +1,24 @@
+.other-profile-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.other-profile-card img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    padding: 12px;
+    object-fit: cover;
+}
+
+.other-profile-image {
+    display: flex;
+    flex-direction: column;
+}
+
+.other-profile-details {
+    display: flex;
+    flex-direction: column;
+}
