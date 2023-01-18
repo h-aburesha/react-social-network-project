@@ -29,6 +29,8 @@ export const App = () => {
         setShowFileUpload(!showFileUpload);
     };
 
+    const clickBackgroundCloseUploader = (event) => {};
+
     useEffect(() => {
         (async () => {
             const response = await fetch(`/user`);
@@ -62,27 +64,13 @@ export const App = () => {
                             <UploadProfilePicture
                                 userId={user.id}
                                 updatePic={updatePic}
+                                onClick={handleProfilePictureClick}
                             />
                         )}
                         <Link to="/users"> Find new people? 🍒 </Link>
                         <button>Logout</button>
                     </div>
                 </header>
-
-                <div className="redux-counter">
-                    <h1> The count is: {count}</h1>
-                    <div className="redux-buttons">
-                        <button onClick={() => dispatch(increment())}>
-                            Increment
-                        </button>
-                        <button onClick={() => dispatch(decrement())}>
-                            Decrement
-                        </button>
-                        <button onClick={() => dispatch(incrementByAmount(33))}>
-                            Increment by 33
-                        </button>
-                    </div>
-                </div>
 
                 <main>
                     <Routes>
@@ -120,6 +108,20 @@ export const App = () => {
 
 /* 
 
-            
+    
+                <div className="redux-counter">
+                    <h1> The count is: {count}</h1>
+                    <div className="redux-buttons">
+                        <button onClick={() => dispatch(increment())}>
+                            Increment
+                        </button>
+                        <button onClick={() => dispatch(decrement())}>
+                            Decrement
+                        </button>
+                        <button onClick={() => dispatch(incrementByAmount(33))}>
+                            Increment by 33
+                        </button>
+                    </div>
+                </div>        
 
 */

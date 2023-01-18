@@ -71,6 +71,19 @@ module.exports.getMatchingUsers = (val) => {
     );
 };
 
+module.exports.findFriendship = (user1, user2) => {
+    return db.query(
+        `SELECT * FROM friendships
+        WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1);`,
+        [user1, user2]
+    );
+};
+
+module.exports.acceptFriendship = (sender, recipient) => {
+    // ...
+};
+
 //SELECT * FROM reset_codes WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';
 
 // module.exports.getImgById = (id) => {

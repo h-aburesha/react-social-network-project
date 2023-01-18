@@ -1,12 +1,19 @@
 import { createRef, useState } from "react";
+import "./Uploader.css";
 
-const UploadProfilePicture = ({ userId, updatePic }) => {
+const UploadProfilePicture = ({ userId, updatePic, onClick }) => {
     const [picture, setPicture] = useState(null);
     const fileInput = createRef();
 
     const handleChange = (event) => {
         setPicture(event.target.files[0]);
         console.log("handleSubmit evt: ", event, "userId", userId);
+    };
+
+    const closeOverlay = (evt) => {
+        if (evt.currentTarget === evt.target) {
+            onClick(evt);
+        }
     };
 
     const handleSubmit = async (event) => {
@@ -41,19 +48,21 @@ const UploadProfilePicture = ({ userId, updatePic }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor="picture">Upload Profile picture:</label>
-            <input
-                type="file"
-                ref={fileInput}
-                name="file"
-                id="profile-picture"
-                onChange={handleChange}
-                accept="image/*"
-            />
-            <br />
-            <button type="submit">Upload</button>
-        </form>
+        <div className="overlay" onClick={closeOverlay}>
+            <form className="uploader-form" onSubmit={handleSubmit}>
+                <label htmlFor="picture">Upload Profile picture:</label>
+                <input
+                    type="file"
+                    ref={fileInput}
+                    name="file"
+                    id="profile-picture"
+                    onChange={handleChange}
+                    accept="image/*"
+                />
+                <br />
+                <button type="submit">Upload</button>
+            </form>
+        </div>
     );
 };
 
