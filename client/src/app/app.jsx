@@ -55,7 +55,9 @@ export const App = () => {
             <BrowserRouter>
                 <hr />
                 <header className="header">
-                    <Logo />
+                    <Link to="/">
+                        <Logo />
+                    </Link>
                     <div className="nav-right">
                         <ProfilePic
                             user={user}
