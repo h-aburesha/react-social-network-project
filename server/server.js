@@ -189,7 +189,7 @@ app.post("/update-bio", async (req, res) => {
     }
 });
 
-app.get("/users", async (req, res) => {
+app.get("/api/users", async (req, res) => {
     try {
         // const { userId } = req.session; // Helpful maybe?
         getAllUsers().then(({ rows }) => {
@@ -206,7 +206,7 @@ app.get("/users", async (req, res) => {
     }
 });
 
-app.get("/users/search", async (req, res) => {
+app.get("/api/users/search", async (req, res) => {
     try {
         const { name } = req.query;
         getMatchingUsers(name).then(({ rows }) => {
@@ -224,7 +224,7 @@ app.get("/users/search", async (req, res) => {
     }
 });
 
-app.get("/user/:id", async (req, res) => {
+app.get("/api/user/:id", async (req, res) => {
     try {
         const { id } = req.params;
         getUserDataById(id).then(({ rows }) => {

@@ -53,6 +53,7 @@ export const App = () => {
             {/* <NavigationBar /> */}
 
             <BrowserRouter>
+                <hr />
                 <header className="header">
                     <Logo />
                     <div className="nav-right">
@@ -71,7 +72,7 @@ export const App = () => {
                         <button>Logout</button>
                     </div>
                 </header>
-
+                <hr />
                 <main>
                     <Routes>
                         <Route path="/users" element={<FindPeople />} />

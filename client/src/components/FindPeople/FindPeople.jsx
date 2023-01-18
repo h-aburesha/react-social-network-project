@@ -56,13 +56,13 @@ const FindPeople = () => {
     );
 
     async function fetchUsers() {
-        const response = await fetch("/users");
+        const response = await fetch("/api/users");
         const data = await response.json();
         return data;
     }
 
     async function fetchMatchingUsers(search) {
-        const response = await fetch(`/users/search/?name=${search}`);
+        const response = await fetch(`/api/users/search/?name=${search}`);
         const data = await response.json();
         return data;
     }
