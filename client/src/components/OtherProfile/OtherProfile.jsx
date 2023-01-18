@@ -27,7 +27,7 @@ const OtherProfile = () => {
                         {user.firstname} {user.lastname}
                     </h4>
                     <h4>{user.bio}</h4>
-                    <FriendButton otherUserId={user.id} />
+                    {user.id && <FriendButton otherUserId={user.id} />}
                 </div>
             </li>
         </>

@@ -71,7 +71,8 @@ module.exports.getMatchingUsers = (val) => {
     );
 };
 
-module.exports.findFriendship = (user1, user2) => {
+module.exports.findFriendshipBetweenTwoIds = (user1, user2) => {
+    console.log("DB user1,2", user1, user2);
     return db.query(
         `SELECT * FROM friendships
         WHERE (sender_id = $1 AND recipient_id = $2)

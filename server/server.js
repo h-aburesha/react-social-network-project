@@ -16,6 +16,7 @@ const {
     updateBio,
     getAllUsers,
     getMatchingUsers,
+    findFriendshipBetweenTwoIds,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -235,12 +236,23 @@ app.get("/api/user/:id", async (req, res) => {
             });
         });
         console.log(":id ", id);
-    } catch (error) {}
+    } catch (error) {
+        console.log("error in /api/user/:id ", error);
+    }
 });
 
 app.get("/api/friend-request/:otherUserId", async (req, res) => {
     try {
         const { otherUserId } = req.params;
+        const { userId } = req.session;
+        findFriendshipBetweenTwoIds(userId, otherUserId).then(({ rows }) => {
+            if (!rows[0]) {
+                res.json({
+                    friendshipStatus: "no friendship/request",
+                });
+                console.log("friendship !rows[0]: ", rows);
+            }
+        });
         // getUserDataById(id).then(({ rows }) => {
         //     console.log(rows);
         //     res.json({
@@ -248,8 +260,10 @@ app.get("/api/friend-request/:otherUserId", async (req, res) => {
         //         user: rows[0],
         //     });
         // });
-        console.log(":otherUserId ", otherUserId);
-    } catch (error) {}
+        // console.log(":otherUserId: ", otherUserId, "Cookie userId: ", userId);
+    } catch (error) {
+        console.log("error in findFriendship: ", error);
+    }
 });
 
 app.get("*", function (req, res) {
