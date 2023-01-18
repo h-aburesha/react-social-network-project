@@ -238,6 +238,20 @@ app.get("/api/user/:id", async (req, res) => {
     } catch (error) {}
 });
 
+app.get("/api/friend-request/:otherUserId", async (req, res) => {
+    try {
+        const { otherUserId } = req.params;
+        // getUserDataById(id).then(({ rows }) => {
+        //     console.log(rows);
+        //     res.json({
+        //         success: true,
+        //         user: rows[0],
+        //     });
+        // });
+        console.log(":otherUserId ", otherUserId);
+    } catch (error) {}
+});
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });

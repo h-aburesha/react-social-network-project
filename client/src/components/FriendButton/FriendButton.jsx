@@ -3,7 +3,7 @@ import "./FriendButton.css";
 
 function FriendButton({ otherUserId }) {
     useEffect(() => {
-        fetch(`/friend-request/${otherUserId}`)
+        fetch(`/api/friend-request/${otherUserId}`)
             .then((res) => {})
             .then((data) => {
                 setButtonText(data.buttonText);
