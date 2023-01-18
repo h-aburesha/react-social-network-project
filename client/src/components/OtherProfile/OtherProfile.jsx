@@ -23,9 +23,8 @@ const OtherProfile = () => {
                     <img src={user.profilepicurl} alt={user.firstname} />
                 </div>
                 <div className="other-profile-details">
-                    <h4>
-                        {user.firstname} {user.lastname}
-                    </h4>
+                    <h4 />
+                    {user.firstname} {user.lastname}
                     <h4>{user.bio}</h4>
                     {user.id && <FriendButton otherUserId={user.id} />}
                 </div>

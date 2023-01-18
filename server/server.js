@@ -248,7 +248,7 @@ app.get("/api/friend-request/:otherUserId", async (req, res) => {
         findFriendshipBetweenTwoIds(userId, otherUserId).then(({ rows }) => {
             if (!rows[0]) {
                 res.json({
-                    friendshipStatus: "no friendship/request",
+                    friendshipStatus: "Add Friend 🍓",
                 });
                 console.log("friendship !rows[0]: ", rows);
             }
