@@ -245,22 +245,36 @@ app.get("/api/friend-request/:otherUserId", async (req, res) => {
     try {
         const { otherUserId } = req.params;
         const { userId } = req.session;
-        findFriendshipBetweenTwoIds(userId, otherUserId).then(({ rows }) => {
-            if (!rows[0]) {
-                res.json({
-                    friendshipStatus: "Add Friend 🍓",
-                });
-                console.log("friendship !rows[0]: ", rows);
-            }
-        });
-        // getUserDataById(id).then(({ rows }) => {
-        //     console.log(rows);
+        const { rows } = await findFriendshipBetweenTwoIds(userId, otherUserId);
+        if (!rows[0]) {
+            res.json({
+                friendshipStatus: "Add Friend 🍓",
+                isFriend: false,
+            });
+            console.log("friendship !rows[0]: ", rows);
+        }
+    } catch (error) {
+        console.log("error in findFriendship: ", error);
+    }
+});
+
+app.post("/api/add-friend/:otherUserId", async (req, res) => {
+    try {
+        const { otherUserId } = req.params;
+        const { userId } = req.session;
+        console.log(
+            "/api/add-friend otherUserId, userId: ",
+            otherUserId,
+            userId
+        );
+        // const { rows } = await findFriendshipBetweenTwoIds(userId, otherUserId);
+        // if (!rows[0]) {
         //     res.json({
-        //         success: true,
-        //         user: rows[0],
+        //         friendshipStatus: "Add Friend 🍓",
+        //         isFriend: false,
         //     });
-        // });
-        // console.log(":otherUserId: ", otherUserId, "Cookie userId: ", userId);
+        //     console.log("friendship !rows[0]: ", rows);
+        // }
     } catch (error) {
         console.log("error in findFriendship: ", error);
     }

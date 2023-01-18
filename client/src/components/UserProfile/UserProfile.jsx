@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const UserProfile = ({ user, onClick, updateBio }) => {
-    const [bio, setBio] = useState(user?.bio || "No bio yet.");
+    const [bio, setBio] = useState("");
     const [editing, setEditing] = useState(false);
 
     const handleChange = (event) => {

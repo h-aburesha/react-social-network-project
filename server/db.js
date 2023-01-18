@@ -71,13 +71,13 @@ module.exports.getMatchingUsers = (val) => {
     );
 };
 
-module.exports.findFriendshipBetweenTwoIds = (user1, user2) => {
-    console.log("DB user1, user2: ", user1, user2);
+module.exports.findFriendshipBetweenTwoIds = (userId, otherUserId) => {
+    console.log("DB user1, user2: ", userId, otherUserId);
     return db.query(
         `SELECT * FROM friendships
         WHERE (sender_id = $1 AND recipient_id = $2)
         OR (sender_id = $2 AND recipient_id = $1);`,
-        [user1, user2]
+        [userId, otherUserId]
     );
 };
 
