@@ -17,7 +17,7 @@ const {
     getAllUsers,
     getMatchingUsers,
     findFriendshipBetweenTwoIds,
-    addFriend,
+    updateFriendship,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -66,7 +66,7 @@ app.post("/register", async (req, res) => {
             email,
             hashedPWD
         );
-        console.log(rows[0]);
+        // console.log(rows[0]);
         req.session.userId = rows[0].id;
         res.json({
             success: true,
@@ -230,13 +230,13 @@ app.get("/api/user/:id", async (req, res) => {
     try {
         const { id } = req.params;
         getUserDataById(id).then(({ rows }) => {
-            console.log(rows);
+            // console.log(rows);
             res.json({
                 success: true,
                 user: rows[0],
             });
         });
-        console.log(":id ", id);
+        // console.log(":id ", id);
     } catch (error) {
         console.log("error in /api/user/:id ", error);
     }
@@ -245,21 +245,25 @@ app.get("/api/user/:id", async (req, res) => {
 app.get("/api/friend-request/:otherUserId", async (req, res) => {
     try {
         let friendshipStatus;
+        const addFriendText = "Add Friend";
+        const cancelRequestText = "Cancel Request";
+        const pendingRequestText = "Pending Friendship";
+        const unfriendText = "Unfriend";
 
         const { otherUserId } = req.params;
         const { userId } = req.session;
         const { rows } = await findFriendshipBetweenTwoIds(userId, otherUserId);
         if (!rows[0]) {
-            friendshipStatus = "Add Friend";
+            friendshipStatus = addFriendText;
             console.log("friendship !rows[0]: ", rows);
         } else if (!rows[0].accepted && rows[0].sender_id === userId) {
-            friendshipStatus = "Cancel Request";
+            friendshipStatus = cancelRequestText;
         } else if (!rows[0].accepted && rows[0].recipient_id === userId) {
-            friendshipStatus = "Pending Friendship";
+            friendshipStatus = pendingRequestText;
         } else if (rows[0].accepted) {
-            friendshipStatus = "Unfriend";
+            friendshipStatus = unfriendText;
         }
-        res.json({ friendshipStatus });
+        return res.json({ friendshipStatus });
     } catch (error) {
         console.log("error in friend-request: ", error);
     }
@@ -267,26 +271,29 @@ app.get("/api/friend-request/:otherUserId", async (req, res) => {
 
 app.post("/api/update-friendship", async (req, res) => {
     try {
-        const { otherUserId, accepted } = req.body;
+        const addFriendText = "Add Friend";
+        const cancelRequestText = "Cancel Request";
+        const pendingRequestText = "Pending Friendship";
+        const unfriendText = "Unfriend";
+
+        const { otherUserId, accepted, buttonText } = req.body;
         const { userId } = req.session;
+
         console.log(
-            "/api/add-friend:",
             "otherUserId: ",
             otherUserId,
             "userId: ",
-            userId
+            userId,
+            "buttonText: ",
+            buttonText
         );
-        const { rows } = await addFriend(userId, otherUserId, accepted);
-        console.log("update-friendship rows: ", rows[0]);
-
-        // const { rows } = await findFriendshipBetweenTwoIds(userId, otherUserId);
-        // if (!rows[0]) {
-        //     res.json({
-        //         friendshipStatus: "Add Friend 🍓",
-        //         isFriend: false,
-        //     });
-        //     console.log("friendship !rows[0]: ", rows);
-        // }
+        if (buttonText === cancelRequestText || buttonText === unfriendText) {
+            console.log("Unfriend or Cancel Requested from Client");
+        } else if (buttonText === pendingRequestText) {
+            console.log("Friendship Accepted");
+        } else if (buttonText === addFriendText) {
+            console.log("Friendship Requested from userId:", userId);
+        }
     } catch (error) {
         console.log("error in findFriendship: ", error);
     }
