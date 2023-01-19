@@ -81,6 +81,13 @@ module.exports.findFriendshipBetweenTwoIds = (userId, otherUserId) => {
     );
 };
 
+module.exports.addFriend = (sender_id, recipient_id, accepted) => {
+    return db.query(
+        `INSERT INTO friendships (sender_id, recipient_id, accepted) VALUES ($1, $2, $3) RETURNING *;`,
+        [sender_id, recipient_id, accepted]
+    );
+};
+
 module.exports.acceptFriendship = (sender, recipient) => {
     // ...
 };

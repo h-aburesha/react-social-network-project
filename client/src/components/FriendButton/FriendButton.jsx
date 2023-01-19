@@ -3,7 +3,6 @@ import "./FriendButton.css";
 
 function FriendButton({ otherUserId }) {
     const [buttonText, setButtonText] = useState("");
-    const [isFriend, setIsFriend] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -11,9 +10,7 @@ function FriendButton({ otherUserId }) {
             const { friendshipStatus, isFriend } = await response.json(); // can also send more & then setStatus? isFriend, isPending, isSender
             // console.log("friendData: ", friendshipStatus);
             console.log("response.data: ", friendshipStatus);
-            setIsFriend(isFriend);
-            console.log(" ClientSide isFriend?: ", isFriend);
-            updateButtonText();
+            setButtonText(friendshipStatus);
         })()
             .then(() => {
                 // console.log("friendData: ");
@@ -24,15 +21,18 @@ function FriendButton({ otherUserId }) {
             });
     }, [otherUserId]);
 
-    const updateButtonText = () => {
-        if (!isFriend) {
-            setButtonText("Add Friend  🍓");
-        }
-    };
-
     const handleClick = () => {
-        if (!isFriend) {
-            fetch(`/api/add-friend/${otherUserId}`, { method: "POST" });
+        if (buttonText === "Add Friend") {
+            fetch(`/api/update-friendship`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    otherUserId,
+                    accepted: false,
+                }),
+            });
         }
     };
 

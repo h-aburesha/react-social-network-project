@@ -17,6 +17,7 @@ const {
     getAllUsers,
     getMatchingUsers,
     findFriendshipBetweenTwoIds,
+    addFriend,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -243,30 +244,44 @@ app.get("/api/user/:id", async (req, res) => {
 
 app.get("/api/friend-request/:otherUserId", async (req, res) => {
     try {
+        let friendshipStatus;
+
         const { otherUserId } = req.params;
         const { userId } = req.session;
         const { rows } = await findFriendshipBetweenTwoIds(userId, otherUserId);
-        if (!rows[0]) {
-            res.json({
-                friendshipStatus: "Add Friend 🍓",
-                isFriend: false,
-            });
+        if (!rows[0] || !rows[0].accepted) {
+            friendshipStatus = "Add Friend";
             console.log("friendship !rows[0]: ", rows);
         }
+        if (!rows[0].accepted && rows[0].sender_id === userId) {
+            friendshipStatus = "Cancel Request";
+        }
+        if (!rows[0].accepted && rows[0].recipient_id === userId) {
+            friendshipStatus = "Pending Friendship";
+        }
+        if (rows[0].accepted) {
+            friendshipStatus = "Unfriend";
+        }
+        res.json({ friendshipStatus });
     } catch (error) {
-        console.log("error in findFriendship: ", error);
+        console.log("error in friend-request: ", error);
     }
 });
 
-app.post("/api/add-friend/:otherUserId", async (req, res) => {
+app.post("/api/update-friendship", async (req, res) => {
     try {
-        const { otherUserId } = req.params;
+        const { otherUserId, accepted } = req.body;
         const { userId } = req.session;
         console.log(
-            "/api/add-friend otherUserId, userId: ",
+            "/api/add-friend:",
+            "otherUserId: ",
             otherUserId,
+            "userId: ",
             userId
         );
+        const { rows } = await addFriend(userId, otherUserId, accepted);
+        console.log("update-friendship rows: ", rows[0]);
+
         // const { rows } = await findFriendshipBetweenTwoIds(userId, otherUserId);
         // if (!rows[0]) {
         //     res.json({
