@@ -293,6 +293,8 @@ app.post("/api/update-friendship", async (req, res) => {
             console.log("Friendship Accepted");
         } else if (buttonText === addFriendText) {
             console.log("Friendship Requested from userId:", userId);
+        } else if (buttonText === unfriendText) {
+            console.log("Unfriend Requested from userId:", userId);
         }
     } catch (error) {
         console.log("error in findFriendship: ", error);

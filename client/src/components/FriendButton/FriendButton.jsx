@@ -63,6 +63,18 @@ function FriendButton({ otherUserId }) {
                     buttonText,
                 }),
             });
+        } else if (buttonText === unfriendText) {
+            fetch(`/api/update-friendship`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    otherUserId,
+                    accepted: false,
+                    buttonText,
+                }),
+            });
         }
     };
 
