@@ -72,7 +72,7 @@ module.exports.getMatchingUsers = (val) => {
 };
 
 module.exports.findFriendshipBetweenTwoIds = (userId, otherUserId) => {
-    console.log("DB user1, user2: ", userId, otherUserId);
+    // console.log("DB user1, user2: ", userId, otherUserId);
     return db.query(
         `SELECT * FROM friendships
         WHERE (sender_id = $1 AND recipient_id = $2)
@@ -81,10 +81,19 @@ module.exports.findFriendshipBetweenTwoIds = (userId, otherUserId) => {
     );
 };
 
-module.exports.addFriend = (sender_id, recipient_id, accepted) => {
+module.exports.updateFriendship = (sender_id, recipient_id, accepted) => {
     return db.query(
         `INSERT INTO friendships (sender_id, recipient_id, accepted) VALUES ($1, $2, $3) RETURNING *;`,
         [sender_id, recipient_id, accepted]
+    );
+};
+
+module.exports.deleteOrCancelFriendship = (sender, recipient) => {
+    return db.query(
+        `DELETE  FROM friendships
+        WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1);`,
+        [userId, otherUserId]
     );
 };
 
