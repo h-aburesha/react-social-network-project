@@ -22,7 +22,12 @@ function FriendButton({ otherUserId }) {
     }, [otherUserId]);
 
     const handleClick = () => {
-        if (buttonText === "Add Friend") {
+        const addFriendText = "Add Friend";
+        const cancelRequestText = "Cancel Request";
+        const pendingRequestText = "Pending Friendship";
+        const unfriendText = "Unfriend";
+
+        if (buttonText === addFriendText) {
             fetch(`/api/update-friendship`, {
                 method: "POST",
                 headers: {
@@ -31,6 +36,31 @@ function FriendButton({ otherUserId }) {
                 body: JSON.stringify({
                     otherUserId,
                     accepted: false,
+                    buttonText,
+                }),
+            });
+        } else if (buttonText === cancelRequestText) {
+            fetch(`/api/update-friendship`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    otherUserId,
+                    accepted: false,
+                    buttonText,
+                }),
+            });
+        } else if (buttonText === pendingRequestText) {
+            fetch(`/api/update-friendship`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    otherUserId,
+                    accepted: true,
+                    buttonText,
                 }),
             });
         }
