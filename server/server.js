@@ -249,17 +249,14 @@ app.get("/api/friend-request/:otherUserId", async (req, res) => {
         const { otherUserId } = req.params;
         const { userId } = req.session;
         const { rows } = await findFriendshipBetweenTwoIds(userId, otherUserId);
-        if (!rows[0] || !rows[0].accepted) {
+        if (!rows[0]) {
             friendshipStatus = "Add Friend";
             console.log("friendship !rows[0]: ", rows);
-        }
-        if (!rows[0].accepted && rows[0].sender_id === userId) {
+        } else if (!rows[0].accepted && rows[0].sender_id === userId) {
             friendshipStatus = "Cancel Request";
-        }
-        if (!rows[0].accepted && rows[0].recipient_id === userId) {
+        } else if (!rows[0].accepted && rows[0].recipient_id === userId) {
             friendshipStatus = "Pending Friendship";
-        }
-        if (rows[0].accepted) {
+        } else if (rows[0].accepted) {
             friendshipStatus = "Unfriend";
         }
         res.json({ friendshipStatus });

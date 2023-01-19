@@ -7,7 +7,7 @@ function FriendButton({ otherUserId }) {
     useEffect(() => {
         (async () => {
             const response = await fetch(`/api/friend-request/${otherUserId}`);
-            const { friendshipStatus, isFriend } = await response.json(); // can also send more & then setStatus? isFriend, isPending, isSender
+            const { friendshipStatus } = await response.json(); // can also send more & then setStatus? isFriend, isPending, isSender
             // console.log("friendData: ", friendshipStatus);
             console.log("response.data: ", friendshipStatus);
             setButtonText(friendshipStatus);
