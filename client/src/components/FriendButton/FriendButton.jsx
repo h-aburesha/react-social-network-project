@@ -51,7 +51,11 @@ function FriendButton({ otherUserId }) {
                 accepted,
                 buttonText,
             }),
-        });
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setButtonText(data.buttonText);
+            });
     };
 
     return (

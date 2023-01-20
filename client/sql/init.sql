@@ -24,6 +24,14 @@ ALTER TABLE users ALTER COLUMN profilepicurl SET DEFAULT 'https://s3.amazonaws.c
 
 ALTER TABLE users ADD COLUMN bio character varying(255) DEFAULT NULL;
 
+CREATE TABLE friendships (
+    id SERIAL PRIMARY KEY,
+    sender_id INTEGER NOT NULL REFERENCES users(id),
+    recipient_id INTEGER NOT NULL REFERENCES users(id),
+    accepted BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- CREATE TABLE images(
 --     id SERIAL PRIMARY KEY,
 --     image_url VARCHAR NOT NULL,

@@ -81,14 +81,22 @@ module.exports.findFriendshipBetweenTwoIds = (userId, otherUserId) => {
     );
 };
 
-module.exports.updateFriendship = (sender_id, recipient_id, accepted) => {
+module.exports.addFriendship = (sender_id, recipient_id) => {
     return db.query(
-        `INSERT INTO friendships (sender_id, recipient_id, accepted) VALUES ($1, $2, $3) RETURNING *;`,
-        [sender_id, recipient_id, accepted]
+        `INSERT INTO friendships (sender_id, recipient_id) VALUES ($1, $2) RETURNING *;`,
+        [sender_id, recipient_id]
     );
 };
 
-module.exports.deleteOrCancelFriendship = (sender, recipient) => {
+module.exports.acceptFriendship = (sender_id, recipient_id) => {
+    return db.query(
+        `UPDATE friendships SET accepted = true WHERE (sender_id = $1 AND recipient_id = $2)
+        OR (sender_id = $2 AND recipient_id = $1) RETURNING *;`,
+        [sender_id, recipient_id]
+    );
+};
+
+module.exports.deleteOrCancelFriendship = (userId, otherUserId) => {
     return db.query(
         `DELETE  FROM friendships
         WHERE (sender_id = $1 AND recipient_id = $2)
@@ -96,71 +104,3 @@ module.exports.deleteOrCancelFriendship = (sender, recipient) => {
         [userId, otherUserId]
     );
 };
-
-module.exports.acceptFriendship = (sender, recipient) => {
-    // ...
-};
-
-//SELECT * FROM reset_codes WHERE CURRENT_TIMESTAMP - created_at < INTERVAL '10 minutes';
-
-// module.exports.getImgById = (id) => {
-//     return db.query(`SELECT * FROM images WHERE id = $1`, [id]);
-// };
-
-// module.exports.getAllImg = () => {
-//     return db.query(`
-//     SELECT * FROM images
-//     ORDER BY id ASC
-//     `);
-// };
-
-// module.exports.getMoreImages = (lastImgId) => {
-//     return db.query(
-//         `
-//     SELECT id, title, url, (
-//         SELECT id FROM images
-//         ORDER BY id ASC
-//         LIMIT 1
-//     ) AS "lowestId" FROM images
-//     WHERE id > $1
-//     ORDER BY id DESC
-//     LIMIT 5;
-//     `,
-//         [lastImgId]
-//     );
-// };
-
-// module.exports.addImg = (url, username, title, description) => {
-//     return db.query(
-//         `INSERT INTO images (url, username, title, description) VALUES ($1, $2, $3, $4) RETURNING *;`,
-//         [url, username, title, description]
-//     );
-// };
-
-// module.exports.addComment = (comment, username, image_id) => {
-//     return db.query(
-//         `INSERT INTO comments (comment, username, image_id) VALUES ($1, $2, $3) RETURNING *;`,
-//         [comment, username, image_id]
-//     );
-// };
-
-// module.exports.getAllComments = (image_id) => {
-//     return db.query(
-//         `
-//     SELECT * FROM comments WHERE image_id = $1
-//     ORDER BY created_at DESC;
-//     `,
-//         [image_id]
-//     );
-// };
-
-// module.exports.addLikes = (imageId) => {
-//     return db.query(
-//         `
-//         UPDATE images
-//         SET likes = likes + 1
-//         WHERE id = $1
-//         RETURNING *;`,
-//         [imageId]
-//     );
-// };

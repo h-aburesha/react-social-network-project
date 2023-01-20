@@ -17,7 +17,9 @@ const {
     getAllUsers,
     getMatchingUsers,
     findFriendshipBetweenTwoIds,
-    updateFriendship,
+    addFriendship,
+    acceptFriendship,
+    deleteOrCancelFriendship,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -253,9 +255,10 @@ app.get("/api/friend-request/:otherUserId", async (req, res) => {
         const { otherUserId } = req.params;
         const { userId } = req.session;
         const { rows } = await findFriendshipBetweenTwoIds(userId, otherUserId);
-        if (!rows[0]) {
+        // console.log("friendship !rows[0]: ", rows);
+        if (!rows.length) {
             friendshipStatus = addFriendText;
-            console.log("friendship !rows[0]: ", rows);
+            // console.log("friendship !rows[0]: ", rows);
         } else if (!rows[0].accepted && rows[0].sender_id === userId) {
             friendshipStatus = cancelRequestText;
         } else if (!rows[0].accepted && rows[0].recipient_id === userId) {
@@ -276,7 +279,7 @@ app.post("/api/update-friendship", async (req, res) => {
         const pendingRequestText = "Pending Friendship";
         const unfriendText = "Unfriend";
 
-        const { otherUserId, accepted, buttonText } = req.body;
+        const { otherUserId, buttonText } = req.body;
         const { userId } = req.session;
 
         console.log(
@@ -288,13 +291,19 @@ app.post("/api/update-friendship", async (req, res) => {
             buttonText
         );
         if (buttonText === cancelRequestText || buttonText === unfriendText) {
+            deleteOrCancelFriendship(userId, otherUserId);
             console.log("Unfriend or Cancel Requested from Client");
+            res.json({ buttonText: addFriendText });
         }
         if (buttonText === pendingRequestText) {
+            acceptFriendship(userId, otherUserId);
             console.log("Friendship Accepted");
+            res.json({ buttonText: unfriendText });
         }
         if (buttonText === addFriendText) {
+            addFriendship(userId, otherUserId);
             console.log("Friendship Requested from userId:", userId);
+            res.json({ buttonText: cancelRequestText });
         }
     } catch (error) {
         console.log("error in findFriendship: ", error);
