@@ -26,56 +26,32 @@ function FriendButton({ otherUserId }) {
         const cancelRequestText = "Cancel Request";
         const pendingRequestText = "Pending Friendship";
         const unfriendText = "Unfriend";
+        let accepted = false;
 
-        if (buttonText === addFriendText) {
-            fetch(`/api/update-friendship`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    otherUserId,
-                    accepted: false,
-                    buttonText,
-                }),
-            });
-        } else if (buttonText === cancelRequestText) {
-            fetch(`/api/update-friendship`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    otherUserId,
-                    accepted: false,
-                    buttonText,
-                }),
-            });
-        } else if (buttonText === pendingRequestText) {
-            fetch(`/api/update-friendship`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    otherUserId,
-                    accepted: true,
-                    buttonText,
-                }),
-            });
-        } else if (buttonText === unfriendText) {
-            fetch(`/api/update-friendship`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    otherUserId,
-                    accepted: false,
-                    buttonText,
-                }),
-            });
+        switch (buttonText) {
+            case addFriendText:
+            case cancelRequestText:
+            case unfriendText:
+                accepted = false;
+                break;
+            case pendingRequestText:
+                accepted = true;
+                break;
+            default:
+                break;
         }
+
+        fetch(`/api/update-friendship`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                otherUserId,
+                accepted,
+                buttonText,
+            }),
+        });
     };
 
     return (
