@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment, incrementByAmount } from "../Redux/counter";
+import { useDispatch } from "react-redux";
+import { setUser } from "../Redux/userSlice";
+import { useSelector } from "react-redux";
 
 import Logo from "../components/Logo/Logocomponent";
 import ProfilePic from "../components/ProfilePic/ProfilePic";
@@ -15,30 +16,23 @@ import OtherProfile from "../components/OtherProfile/OtherProfile";
 import "./app.css";
 
 export const App = () => {
-    /* --------------- REDUX Sandbox --------------- */
-
-    const { count } = useSelector((state) => state.counter);
+    const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
-
-    /* --------------- REDUX Sandbox --------------- */
-
-    const [user, setUser] = useState([]);
-    const [showFileUpload, setShowFileUpload] = useState(false);
-
-    const handleProfilePictureClick = () => {
-        setShowFileUpload(!showFileUpload);
-    };
-
-    const clickBackgroundCloseUploader = (event) => {};
 
     useEffect(() => {
         (async () => {
             const response = await fetch(`/user`);
             const data = await response.json();
-            setUser(data.user);
+            dispatch(setUser(data.user));
             console.log("RES(DATA) Users from DB:", data);
         })();
     }, []);
+
+    const [showFileUpload, setShowFileUpload] = useState(false);
+
+    const handleProfilePictureClick = () => {
+        setShowFileUpload(!showFileUpload);
+    };
 
     function updatePic(file) {
         setUser({ ...user, profilepicurl: file });
@@ -59,10 +53,7 @@ export const App = () => {
                         <Logo />
                     </Link>
                     <div className="nav-right">
-                        <ProfilePic
-                            user={user}
-                            onClick={handleProfilePictureClick}
-                        />
+                        <ProfilePic onClick={handleProfilePictureClick} />
                         {showFileUpload && (
                             <UploadProfilePicture
                                 userId={user.id}
@@ -84,7 +75,6 @@ export const App = () => {
                             path="/"
                             element={
                                 <UserProfile
-                                    user={user}
                                     onClick={handleProfilePictureClick}
                                     updatePic={updatePic}
                                     updateBio={updateBio}
@@ -95,7 +85,6 @@ export const App = () => {
                             path="/navigation"
                             element={
                                 <NavigationBar
-                                    user={user}
                                     onClick={handleProfilePictureClick}
                                     updatePic={updatePic}
                                     updateBio={updateBio}

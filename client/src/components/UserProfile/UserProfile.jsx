@@ -4,7 +4,7 @@ import "./UserProfile.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const UserProfile = ({ user, onClick, updateBio }) => {
+function UserProfile({ user, onClick, updateBio }) {
     const [bio, setBio] = useState("");
     const [editing, setEditing] = useState(false);
 
@@ -58,6 +58,6 @@ const UserProfile = ({ user, onClick, updateBio }) => {
             </div>
         </>
     );
-};
+}
 
 export default UserProfile;

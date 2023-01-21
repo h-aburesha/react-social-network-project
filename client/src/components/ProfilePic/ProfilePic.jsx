@@ -1,12 +1,16 @@
 import "./ProfilePic.css";
+import { useSelector } from "react-redux";
 
-const ProfilePic = ({ user, onClick }) => {
+const ProfilePic = ({ onClick }) => {
+    const user = useSelector((state) => state.user);
+    console.log();
+
     return (
         <div className="profile-pic">
             <img
                 onClick={onClick}
-                src={user?.profilepicurl}
-                alt={user?.firstname}
+                src={user.user?.profilepicurl}
+                alt={user.user?.firstname}
             />
         </div>
     );
