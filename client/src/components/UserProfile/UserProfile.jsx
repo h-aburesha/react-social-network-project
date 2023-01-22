@@ -33,7 +33,7 @@ function UserProfile({ onClick }) {
                 userId: user.user?.id,
             }),
         })
-            .then(({ user }) => {
+            .then(() => {
                 dispatch(updateUserBio(bio));
                 console.log("I have updated bio :", bio);
             })

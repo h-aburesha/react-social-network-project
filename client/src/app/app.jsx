@@ -13,6 +13,7 @@ import UploadProfilePicture from "../components/Uploader/Uploader";
 import NavigationBar from "../components/NavigationBar/NavigationBar";
 import FindPeople from "../components/FindPeople/FindPeople";
 import OtherProfile from "../components/OtherProfile/OtherProfile";
+import Friends from "../components/Friends/Friends";
 import "./app.css";
 
 export const App = () => {
@@ -62,11 +63,11 @@ export const App = () => {
                         <ProfilePic onClick={handleProfilePictureClick} />
                         {showFileUpload && (
                             <UploadProfilePicture
-                                userId={user.id}
                                 onClick={handleProfilePictureClick}
                             />
                         )}
                         <Link to="/users"> Find new people? 🍒 </Link>
+                        <Link to="/friends"> See Friendship 🍒 </Link>
                         <button onClick={handleLogout}>Logout</button>
                     </div>
                 </header>
@@ -75,6 +76,7 @@ export const App = () => {
                     <Routes>
                         <Route path="/users" element={<FindPeople />} />
                         <Route path="/user/:id" element={<OtherProfile />} />
+                        <Route path="/friends" element={<Friends />} />
 
                         <Route
                             path="/"

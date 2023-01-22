@@ -20,6 +20,7 @@ const {
     addFriendship,
     acceptFriendship,
     deleteOrCancelFriendship,
+    getFriendsAndWannabes,
 } = require("./db");
 
 const { sendEmail } = require("./ses");
@@ -321,6 +322,23 @@ app.post("/api/update-friendship", async (req, res) => {
         }
     } catch (error) {
         console.log("error in findFriendship: ", error);
+    }
+});
+
+app.get("/api/friends", async (req, res) => {
+    try {
+        const { userId } = req.session;
+        const { rows } = await getFriendsAndWannabes(userId);
+        console.log("api/friends rows: ", rows);
+        res.json({
+            success: true,
+            friendships: rows,
+        });
+    } catch (error) {
+        console.log("err get('/friends'): ", error);
+        res.json({
+            success: false,
+        });
     }
 });
 
