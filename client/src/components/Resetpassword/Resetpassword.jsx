@@ -84,7 +84,6 @@ export default class Login extends Component {
             case 1:
                 return (
                     <>
-                        Step 1
                         <form
                             className="reset-password"
                             onSubmit={this.handleSubmit}
