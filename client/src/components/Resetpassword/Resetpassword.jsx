@@ -113,7 +113,6 @@ export default class Login extends Component {
             case 2:
                 return (
                     <>
-                        Step 2
                         <form
                             className="reset-password"
                             onSubmit={this.handleSubmit}
@@ -128,7 +127,7 @@ export default class Login extends Component {
                             <h3>Reset your password</h3>
                             <label htmlFor="code">Secret Code:</label>
                             <input
-                                type="text"
+                                type="password"
                                 name="code"
                                 ref="codeRef"
                                 key="code"

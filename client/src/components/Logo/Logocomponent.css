@@ -1,11 +1,11 @@
 .logo img {
-    height: 100px;
-    width: 100px;
+    height: 60px;
+    width: 60px;
     transition: transform 0.5s ease-in-out;
 }
 
 .logo img:hover {
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 /* 
 .logo {

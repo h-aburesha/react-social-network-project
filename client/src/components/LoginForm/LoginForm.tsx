@@ -64,7 +64,7 @@ export class LoginForm extends Component<any, LoginState> {
             <form className="login" onSubmit={this.handleSubmit}>
                 <div className="error-message">{this.state.error}</div>
                 <label>
-                    Email:
+                    Email
                     <input
                         type="email"
                         name="email"
@@ -73,7 +73,7 @@ export class LoginForm extends Component<any, LoginState> {
                 </label>
                 <br />
                 <label>
-                    Password:
+                    Password
                     <input
                         type="password"
                         name="password"
