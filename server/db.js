@@ -104,10 +104,19 @@ module.exports.deleteOrCancelFriendship = (userId, otherUserId) => {
         [userId, otherUserId]
     );
 };
-
 module.exports.getFriendsAndWannabes = (userId) => {
     return db.query(
-        `SELECT * FROM friendships WHERE (sender_id = $1 OR recipient_id = $1) AND accepted = accepted`,
+        `SELECT friendships.*, 
+                sender.firstname as sender_firstname, 
+                sender.lastname as sender_lastname, 
+                sender.profilepicurl as sender_profilepicurl, 
+                recipient.firstname as recipient_firstname, 
+                recipient.lastname as recipient_lastname, 
+                recipient.profilepicurl as recipient_profilepicurl
+         FROM friendships 
+         JOIN users as sender ON sender.id = sender_id 
+         JOIN users as recipient ON recipient.id = recipient_id 
+         WHERE (sender_id = $1 OR recipient_id = $1)`,
         [userId]
     );
 };
