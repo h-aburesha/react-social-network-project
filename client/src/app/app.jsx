@@ -40,8 +40,12 @@ export const App = () => {
         setShowFileUpload(!showFileUpload);
     };
 
-    function updateBio(bio) {
-        setUser({ ...user, bio: bio });
+    function handleLogout() {
+        fetch("/logout", {
+            method: "POST",
+        }).then(() => {
+            location.replace("/");
+        });
     }
 
     return (
@@ -63,7 +67,7 @@ export const App = () => {
                             />
                         )}
                         <Link to="/users"> Find new people? 🍒 </Link>
-                        <button>Logout</button>
+                        <button onClick={handleLogout}>Logout</button>
                     </div>
                 </header>
                 <hr />
@@ -77,7 +81,6 @@ export const App = () => {
                             element={
                                 <UserProfile
                                     onClick={handleProfilePictureClick}
-                                    updateBio={updateBio}
                                 />
                             }
                         />
@@ -86,7 +89,6 @@ export const App = () => {
                             element={
                                 <NavigationBar
                                     onClick={handleProfilePictureClick}
-                                    updateBio={updateBio}
                                 />
                             }
                         />

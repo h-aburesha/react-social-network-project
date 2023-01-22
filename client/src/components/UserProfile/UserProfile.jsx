@@ -1,10 +1,16 @@
 import ProfilePic from "../ProfilePic/ProfilePic";
-import NavigationBar from "../NavigationBar/NavigationBar";
-import "./UserProfile.css";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { updateUserBio } from "../../Redux/userSlice";
 
-function UserProfile({ user, onClick, updateBio }) {
+import { useState } from "react";
+
+import "./UserProfile.css";
+
+function UserProfile({ onClick }) {
+    const dispatch = useDispatch();
+
+    const user = useSelector((state) => state.user);
+
     const [bio, setBio] = useState("");
     const [editing, setEditing] = useState(false);
 
@@ -15,7 +21,7 @@ function UserProfile({ user, onClick, updateBio }) {
 
     const handleBioSubmit = async (event) => {
         event.preventDefault();
-        console.log("handleSaveEvent: ", bio, user?.id);
+        console.log("handleSaveEvent: ", bio, user.user?.id);
 
         fetch("/update-bio", {
             method: "POST",
@@ -24,12 +30,12 @@ function UserProfile({ user, onClick, updateBio }) {
             },
             body: JSON.stringify({
                 bio: bio,
-                userId: user?.id,
+                userId: user.user?.id,
             }),
         })
-            .then(() => {
-                updateBio(bio);
-                console.log("I have updated bio :");
+            .then(({ user }) => {
+                dispatch(updateUserBio(bio));
+                console.log("I have updated bio :", bio);
             })
             .catch((error) => {
                 console.log("error in bio/post: ", error);
@@ -45,9 +51,9 @@ function UserProfile({ user, onClick, updateBio }) {
     return (
         <>
             <div className="user-profile">
-                <ProfilePic user={user} onClick={onClick} />
-                Profile Name: {user?.firstname} {user?.lastname}
-                <h4> About me: {user?.bio}</h4>
+                <ProfilePic onClick={onClick} />
+                Profile Name: {user.user?.firstname} {user.user?.lastname}
+                <h4> About me: {user.user?.bio}</h4>
                 <div style={{ display: editing ? "block" : "none" }}>
                     <textarea name="bio" value={bio} onChange={handleChange} />
                     <button onClick={handleBioSubmit}>Save</button>

@@ -10,9 +10,12 @@ const userSlice = createSlice({
         updateProfilePic: (state, action) => {
             state.user.profilepicurl = action.payload;
         },
+        updateUserBio: (state, action) => {
+            state.user.bio = action.payload;
+        },
     },
 });
 
-export const { setUser, updateProfilePic } = userSlice.actions;
+export const { setUser, updateProfilePic, updateUserBio } = userSlice.actions;
 
 export default userSlice;

@@ -108,6 +108,20 @@ app.post("/login", async (req, res) => {
         console.log("err post(/login): ", err);
     }
 });
+
+app.post("/logout", async (req, res) => {
+    try {
+        req.session.userId = null;
+        // res.redirect("/");
+
+        res.json({
+            success: true,
+        });
+    } catch (err) {
+        console.log("err post(/login): ", err);
+    }
+});
+
 app.post("/password/reset/start", async (req, res) => {
     const { email } = req.body;
     console.log("req.body", req.body);

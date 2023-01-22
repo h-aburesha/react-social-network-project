@@ -2,7 +2,6 @@ import { createRef, useState } from "react";
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { setUser } from "../../Redux/userSlice";
 
 import { updateProfilePic } from "../../Redux/userSlice";
 import "./Uploader.css";
@@ -31,9 +30,6 @@ const UploadProfilePicture = ({ onClick }) => {
         console.log("fileInput evt: ", fileInput.current.files[0]);
 
         const formData = new FormData();
-
-        // console.log(("event.target.files[0]: ", event.target.files));
-
         formData.append("file", fileInput.current.files[0]);
         formData.append("userId", user.user.id);
         // sending userId back to the server as second parameter for uploadPictureById()
