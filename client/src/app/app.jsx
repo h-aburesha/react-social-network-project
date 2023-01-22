@@ -19,12 +19,18 @@ export const App = () => {
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
+    console.log(
+        "State: ",
+        useSelector((state) => state)
+    );
+
     useEffect(() => {
         (async () => {
             const response = await fetch(`/user`);
             const data = await response.json();
-            dispatch(setUser(data.user));
             console.log("RES(DATA) Users from DB:", data);
+            dispatch(setUser(data.user));
+            console.log("AFTER RES(DATA) Users from DB:", data);
         })();
     }, []);
 
@@ -33,10 +39,6 @@ export const App = () => {
     const handleProfilePictureClick = () => {
         setShowFileUpload(!showFileUpload);
     };
-
-    function updatePic(file) {
-        setUser({ ...user, profilepicurl: file });
-    }
 
     function updateBio(bio) {
         setUser({ ...user, bio: bio });
@@ -57,7 +59,6 @@ export const App = () => {
                         {showFileUpload && (
                             <UploadProfilePicture
                                 userId={user.id}
-                                updatePic={updatePic}
                                 onClick={handleProfilePictureClick}
                             />
                         )}
@@ -76,7 +77,6 @@ export const App = () => {
                             element={
                                 <UserProfile
                                     onClick={handleProfilePictureClick}
-                                    updatePic={updatePic}
                                     updateBio={updateBio}
                                 />
                             }
@@ -86,7 +86,6 @@ export const App = () => {
                             element={
                                 <NavigationBar
                                     onClick={handleProfilePictureClick}
-                                    updatePic={updatePic}
                                     updateBio={updateBio}
                                 />
                             }
