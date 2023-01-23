@@ -58,6 +58,10 @@ io.on("connection", function (socket) {
         console.log(data);
     });
 
+    socket.emit("thanks-back", {
+        message: "Thanks back to you!! ",
+    });
+
     socket.emit("welcome", {
         message: "Welome. It is nice to see you",
     });

@@ -34,7 +34,7 @@ const Friends = () => {
             );
         })();
     }, []);
-
+    // friends, requests
     const handleAcceptRequest = (sender_id, recipient_id) => {
         let accepted = true;
 

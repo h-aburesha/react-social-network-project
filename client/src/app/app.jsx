@@ -19,9 +19,15 @@ import Friends from "../components/Friends/Friends";
 import "./app.css";
 
 export const App = () => {
+    /* --------------------------------------- 
+                    SOCKET.IO
+    --------------------------------------- */
+
     useEffect(() => {
         initSocket(store);
     }, []);
+
+    /*-------------------------------------- */
 
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
