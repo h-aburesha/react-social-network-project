@@ -329,7 +329,7 @@ app.get("/api/friends", async (req, res) => {
     try {
         const { userId } = req.session;
         const { rows } = await getFriendsAndWannabes(userId);
-        console.log("api/friends rows: ", rows);
+        // console.log("api/friends rows: ", rows);
         res.json({
             success: true,
             friendships: rows,
@@ -344,18 +344,28 @@ app.get("/api/friends", async (req, res) => {
 
 app.post("/api/friends", async (req, res) => {
     try {
-        const { sender_id, recipient_id } = req.body;
-
-        console.log("api/friends POST: ", sender_id, recipient_id);
-        // res.json({
-        //     success: true,
-        //     friendships: rows,
-        // });
+        const { sender_id, recipient_id, accepted } = req.body;
+        if (accepted) {
+            const { rows } = await acceptFriendship(sender_id, recipient_id);
+            res.json({
+                success: true,
+                friendships: rows,
+            });
+        } else if (!accepted) {
+            const { rows } = await deleteOrCancelFriendship(
+                sender_id,
+                recipient_id
+            );
+            res.json({
+                success: true,
+                friendships: rows,
+            });
+        }
     } catch (error) {
-        console.log("err get('/friends'): ", error);
-        // res.json({
-        //     success: false,
-        // });
+        console.log("err post('/friends'): ", error);
+        res.json({
+            success: false,
+        });
     }
 });
 

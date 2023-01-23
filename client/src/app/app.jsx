@@ -66,8 +66,14 @@ export const App = () => {
                                 onClick={handleProfilePictureClick}
                             />
                         )}
-                        <Link to="/users"> 🍒 Find new people? </Link>
-                        <Link to="/friends"> 🍍 See Friendship </Link>
+                        <Link to="/users">
+                            {" "}
+                            <button> Find new people? </button>{" "}
+                        </Link>
+                        <Link to="/friends">
+                            {" "}
+                            <button> See Friendship </button>{" "}
+                        </Link>
                         <button onClick={handleLogout}>Logout</button>
                     </div>
                 </header>

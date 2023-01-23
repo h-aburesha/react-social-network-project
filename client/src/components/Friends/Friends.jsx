@@ -52,6 +52,10 @@ const Friends = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log("data", data);
+                dispatch(setFriends([...friends]));
+            })
+            .catch((err) => {
+                console.error("error in /api/friends POST Client Side", err);
             });
     };
 
@@ -71,6 +75,7 @@ const Friends = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                dispatch(setRequests([...requests]));
                 console.log("data", data);
             });
     };
@@ -88,7 +93,6 @@ const Friends = () => {
                     >
                         <li className="friends-list">
                             <h5 className="profile-details">
-                                {friend.sender_id} {friend.recipient_id}
                                 {friend.recipient_firstname}{" "}
                                 {friend.recipient_lastname}
                                 <button
@@ -120,7 +124,6 @@ const Friends = () => {
                     <ul key={request.id} request={request}>
                         <li className="friends-list">
                             <h5 className="profile-details">
-                                {request.sender_id} {request.recipient_id}
                                 {request.recipient_firstname}{" "}
                                 {request.recipient_lastname}
                                 <button
@@ -132,7 +135,7 @@ const Friends = () => {
                                     }
                                 >
                                     {" "}
-                                    Accept{" "}
+                                    Pending{" "}
                                 </button>
                             </h5>
                             <div className="other-profile-image">
