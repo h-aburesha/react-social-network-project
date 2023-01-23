@@ -16,37 +16,6 @@ const friendshipSlice = createSlice({
     },
 });
 
-export const {
-    setFriends,
-    setRequests,
-    acceptRequest,
-    rejectRequest,
-    endFriendship,
-} = friendshipSlice.actions;
+export const { setFriends, setRequests } = friendshipSlice.actions;
 
 export default friendshipSlice;
-
-/* 
-acceptRequest: (state, action) => {
-            const request = state.requests.find(
-                (req) => req.id === action.payload
-            );
-            if (request) {
-                request.accepted = true;
-                state.friends.push(request);
-                state.requests = state.requests.filter(
-                    (req) => req.id !== action.payload
-                );
-            }
-        },
-        rejectRequest: (state, action) => {
-            state.requests = state.requests.filter(
-                (req) => req.id !== action.payload
-            );
-        },
-        endFriendship: (state, action) => {
-            state.friends = state.friends.filter(
-                (friend) => friend.id !== action.payload
-            );
-        },
-*/

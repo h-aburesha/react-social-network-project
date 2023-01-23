@@ -3,8 +3,22 @@ const app = express();
 const compression = require("compression");
 const path = require("path");
 const { PORT = 3001 } = process.env;
+const { sendEmail } = require("./ses");
+const encrypt = require("./encrypt");
+const cryptoRandomString = require("crypto-random-string");
 const { fileUpload, uploader } = require("./file-upload");
 const cookieSession = require("cookie-session");
+
+app.use(compression());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, "..", "client", "public")));
+app.use(
+    cookieSession({
+        secret: `I'm always angry.`,
+        maxAge: 1000 * 60 * 60 * 24 * 14,
+    })
+);
+
 const {
     addNewUser,
     getUserByEmail,
@@ -23,19 +37,17 @@ const {
     getFriendsAndWannabes,
 } = require("./db");
 
-const { sendEmail } = require("./ses");
-const encrypt = require("./encrypt");
-const cryptoRandomString = require("crypto-random-string");
+/* ------------------------
+        SOCKET.IO
+-------------------------- */
 
-app.use(compression());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "..", "client", "public")));
-app.use(
-    cookieSession({
-        secret: `I'm always angry.`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
+
+/* ------------------------*/
 
 app.get("/user/id.json", (req, res) => {
     res.json({ userId: req.session.userId });
@@ -373,6 +385,6 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(PORT, function () {
+server.listen(PORT, function () {
     console.log(`Express server listening on port ${PORT}`);
 });
