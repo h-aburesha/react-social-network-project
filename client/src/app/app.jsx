@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../Redux/userSlice";
 import { useSelector } from "react-redux";
+import { initSocket } from "../socket";
+import store from "../Redux/store";
 
 import Logo from "../components/Logo/Logocomponent";
 import ProfilePic from "../components/ProfilePic/ProfilePic";
@@ -17,6 +19,10 @@ import Friends from "../components/Friends/Friends";
 import "./app.css";
 
 export const App = () => {
+    useEffect(() => {
+        initSocket(store);
+    }, []);
+
     const user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
