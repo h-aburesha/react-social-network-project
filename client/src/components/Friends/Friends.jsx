@@ -35,8 +35,48 @@ const Friends = () => {
         })();
     }, []);
 
+    const handleAcceptRequest = (sender_id, recipient_id) => {
+        let accepted = true;
+
+        fetch(`/api/friends`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                accepted,
+                sender_id,
+                recipient_id,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("data", data);
+            });
+    };
+
+    const handleEndFriendship = (sender_id, recipient_id) => {
+        let accepted = false;
+
+        fetch(`/api/friends`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                accepted,
+                sender_id,
+                recipient_id,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("data", data);
+            });
+    };
+
     return (
-        <div className="friends">
+        <div className="friendship-container">
             <h2>Friends</h2>
             <div className="other-profile-card">
                 {friends.map((friend) => (
@@ -52,7 +92,12 @@ const Friends = () => {
                                 {friend.recipient_firstname}{" "}
                                 {friend.recipient_lastname}
                                 <button
-                                // onClick={() => handleEndFriendship(friend.id)}
+                                    onClick={() =>
+                                        handleEndFriendship(
+                                            friend.sender_id,
+                                            friend.recipient_id
+                                        )
+                                    }
                                 >
                                     {" "}
                                     Unfriend{" "}
@@ -68,29 +113,23 @@ const Friends = () => {
                     </ul>
                 ))}
             </div>
-
+            <hr />
             <h2>Friend Requests</h2>
             <div className="other-profile-card">
                 {requests.map((request) => (
-                    <ul
-                        key={request.id}
-                        request={request}
-
-                        // handleAcceptRequest={handleAcceptRequest}
-                        // handleRejectRequest={handleRejectRequest}
-                    >
+                    <ul key={request.id} request={request}>
                         <li className="friends-list">
                             <h5 className="profile-details">
                                 {request.sender_id} {request.recipient_id}
                                 {request.recipient_firstname}{" "}
                                 {request.recipient_lastname}
                                 <button
-                                // onClick={() =>
-                                //     handleAcceptRequest(
-                                //         request.id,
-                                //         request.sender.id
-                                //     )
-                                // }
+                                    onClick={() =>
+                                        handleAcceptRequest(
+                                            request.sender_id,
+                                            request.recipient_id
+                                        )
+                                    }
                                 >
                                     {" "}
                                     Accept{" "}

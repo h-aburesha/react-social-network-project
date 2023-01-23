@@ -13,7 +13,21 @@ const friendshipSlice = createSlice({
         setRequests: (state, action) => {
             state.requests = action.payload;
         },
-        acceptRequest: (state, action) => {
+    },
+});
+
+export const {
+    setFriends,
+    setRequests,
+    acceptRequest,
+    rejectRequest,
+    endFriendship,
+} = friendshipSlice.actions;
+
+export default friendshipSlice;
+
+/* 
+acceptRequest: (state, action) => {
             const request = state.requests.find(
                 (req) => req.id === action.payload
             );
@@ -35,15 +49,4 @@ const friendshipSlice = createSlice({
                 (friend) => friend.id !== action.payload
             );
         },
-    },
-});
-
-export const {
-    setFriends,
-    setRequests,
-    acceptRequest,
-    rejectRequest,
-    endFriendship,
-} = friendshipSlice.actions;
-
-export default friendshipSlice;
+*/

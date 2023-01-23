@@ -342,6 +342,23 @@ app.get("/api/friends", async (req, res) => {
     }
 });
 
+app.post("/api/friends", async (req, res) => {
+    try {
+        const { sender_id, recipient_id } = req.body;
+
+        console.log("api/friends POST: ", sender_id, recipient_id);
+        // res.json({
+        //     success: true,
+        //     friendships: rows,
+        // });
+    } catch (error) {
+        console.log("err get('/friends'): ", error);
+        // res.json({
+        //     success: false,
+        // });
+    }
+});
+
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
