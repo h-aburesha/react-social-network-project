@@ -36,50 +36,72 @@ const Friends = () => {
     }, []);
 
     return (
-        <div className="Friends">
+        <div className="friends">
             <h2>Friends</h2>
-            <div className="Friends-list">
+            <div className="other-profile-card">
                 {friends.map((friend) => (
                     <ul
                         key={friend.id}
                         friend={friend}
+
                         // handleEndFriendship={handleEndFriendship}
                     >
-                        <li>
-                            {friend.sender_id} {friend.recipient_id}
-                            <button
-                            // onClick={() => handleEndFriendship(friend.id)}
-                            >
-                                {" "}
-                                Unfriend{" "}
-                            </button>
+                        <li className="friends-list">
+                            <h5 className="profile-details">
+                                {friend.sender_id} {friend.recipient_id}
+                                {friend.recipient_firstname}{" "}
+                                {friend.recipient_lastname}
+                                <button
+                                // onClick={() => handleEndFriendship(friend.id)}
+                                >
+                                    {" "}
+                                    Unfriend{" "}
+                                </button>
+                            </h5>
+                            <div className="other-profile-image">
+                                <img
+                                    src={friend.recipient_profilepicurl}
+                                    alt={friend.recipient_firstname}
+                                />
+                            </div>
                         </li>
                     </ul>
                 ))}
             </div>
 
             <h2>Friend Requests</h2>
-            <div className="Requests-list">
+            <div className="other-profile-card">
                 {requests.map((request) => (
                     <ul
                         key={request.id}
                         request={request}
+
                         // handleAcceptRequest={handleAcceptRequest}
                         // handleRejectRequest={handleRejectRequest}
                     >
-                        <li>
-                            {request.sender_id} {request.recipient_id}
-                            <button
-                            // onClick={() =>
-                            //     handleAcceptRequest(
-                            //         request.id,
-                            //         request.sender.id
-                            //     )
-                            // }
-                            >
-                                {" "}
-                                Accept{" "}
-                            </button>
+                        <li className="friends-list">
+                            <h5 className="profile-details">
+                                {request.sender_id} {request.recipient_id}
+                                {request.recipient_firstname}{" "}
+                                {request.recipient_lastname}
+                                <button
+                                // onClick={() =>
+                                //     handleAcceptRequest(
+                                //         request.id,
+                                //         request.sender.id
+                                //     )
+                                // }
+                                >
+                                    {" "}
+                                    Accept{" "}
+                                </button>
+                            </h5>
+                            <div className="other-profile-image">
+                                <img
+                                    src={request.recipient_profilepicurl}
+                                    alt={request.recipient_firstname}
+                                />
+                            </div>
                         </li>
                     </ul>
                 ))}
