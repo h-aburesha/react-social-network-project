@@ -33,9 +33,8 @@ const Friends = () => {
                 data
             );
         })();
-    }, [friends, requests]);
+    }, [friends, requests]); // friends, requests added to prevent infinite loop
 
-    // friends, requests
     const handleAcceptRequest = (sender_id, recipient_id) => {
         let accepted = true;
 
