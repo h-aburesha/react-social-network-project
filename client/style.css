@@ -145,6 +145,7 @@ button {
     background-color: #1a1a1a;
     cursor: pointer;
     transition: border-color 0.25s;
+    margin: 0 8px;
 }
 
 button:hover {
