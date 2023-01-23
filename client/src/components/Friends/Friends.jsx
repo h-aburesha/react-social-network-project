@@ -33,7 +33,8 @@ const Friends = () => {
                 data
             );
         })();
-    }, []);
+    }, [friends, requests]);
+
     // friends, requests
     const handleAcceptRequest = (sender_id, recipient_id) => {
         let accepted = true;
@@ -52,7 +53,7 @@ const Friends = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log("data", data);
-                dispatch(setFriends([...friends]));
+                dispatch(setFriends(friends));
             })
             .catch((err) => {
                 console.error("error in /api/friends POST Client Side", err);
@@ -75,7 +76,7 @@ const Friends = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                dispatch(setRequests([...requests]));
+                dispatch(setRequests(requests));
                 console.log("data", data);
             });
     };
